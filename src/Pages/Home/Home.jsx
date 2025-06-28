@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import cloudyday3 from "../../weatherCondition/animated/cloudy-day-3.svg";
 import temp from "../../assets/temp.png";
+import nivroLogo from "../../../public/Nivro.png"
 
 const Home = () => {
   const [filterDetail, setFilterDetail] = useState("templature");
@@ -20,6 +21,7 @@ const Home = () => {
       {/* search */}
       <div className="flex flex-row items-center justify-between mb-3">
         <div className="relative flex items-center">
+          <img src={nivroLogo} alt="" className="size-8 ml-2 mr-2" />
           <input
             type="text"
             placeholder="Location Search"
@@ -163,7 +165,7 @@ const Home = () => {
           <p
             className={`text-sm md:text-[17px] font-semibold ${
               filterDetail === "templature" && "dailyfilter"
-            } px-2 cursor-pointer transition-all duration-200 ease-in-out rounded-xl`}
+            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl`}
             onClick={() => {
               filterDetails("templature");
             }}
@@ -173,7 +175,7 @@ const Home = () => {
           <p
             className={`text-sm md:text-[17px] font-semibold ${
               filterDetail === "precipitation" && "dailyfilter"
-            } px-2 cursor-pointer transition-all duration-200 ease-in-out rounded-xl`}
+            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl`}
             onClick={() => {
               filterDetails("precipitation");
             }}
@@ -183,7 +185,7 @@ const Home = () => {
           <p
             className={`text-sm md:text-[17px] font-semibold ${
               filterDetail === "wind" && "dailyfilter"
-            } px-2 cursor-pointer  transition-all duration-200 ease-in-out rounded-xl`}
+            } px-2 cursor-pointer  transition-all duration-100 ease-in-out rounded-xl`}
             onClick={() => {
               filterDetails("wind");
             }}
