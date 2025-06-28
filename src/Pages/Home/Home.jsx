@@ -23,7 +23,7 @@ const Home = () => {
           <input
             type="text"
             placeholder="Location Search"
-            className="search glass-card relative rounded-2xl px-5 py-1 max-w-3/4 outline-none pr-10 border-2 focus:border-[#4ade80] shadow-2xl"
+            className="search glass-card relative rounded-2xl px-5 py-1 min-w-fit w-[75%] outline-none pr-10 border-2 focus:border-[#4ade80] shadow-2xl"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
