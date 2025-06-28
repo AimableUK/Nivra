@@ -21,7 +21,7 @@ const Home = () => {
       {/* search */}
       <div className="flex flex-row items-center justify-between mb-3">
         <div className="relative flex items-center">
-          <img src={nivroLogo} alt="" className="size-8 ml-2 mr-2" />
+          {/* <img src={nivroLogo} alt="" className="size-8 ml-2 mr-2" /> */}
           <input
             type="text"
             placeholder="Location Search"
