@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import cloudyday3 from "../../weatherCondition/animated/cloudy-day-3.svg";
 
 const Home = () => {
+  const [filterDetail, setFilterDetail] = useState("templature");
+
+  const filterDetails = (detail) => {
+    if (detail === "templature") {
+      setFilterDetail("templature");
+    } else if (detail === "precipitation") {
+      setFilterDetail("precipitation");
+    } else {
+      setFilterDetail("wind");
+    }
+  };
+
   return (
-    <div className="flex flex-col py-8 px-3 md:px-14 lg:px-20">
+    <div className="flex flex-col py-8 px-3 md:px-14 lg:px-20 ">
       {/* search */}
       <div className="flex flex-row items-center justify-between mb-3">
         <div className="relative flex items-center">
           <input
             type="text"
             placeholder="Location Search"
-            className="search glass-card relative rounded-2xl px-5 py-1 min-w-fit outline-none pr-10 border-2 focus:border-[#4ade80] shadow-2xl"
+            className="search glass-card relative rounded-2xl px-5 py-1 min-w-fit  outline-none pr-10 border-2 focus:border-[#4ade80] shadow-2xl"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -104,272 +116,560 @@ const Home = () => {
       {/* Overview */}
 
       <div className="main mb-3 flex flex-col">
-        <div className="flex flex-row gap-2">
-          <p className="text-[17px] font-semibold">Overview</p>
-          <p className="text-[17px] font-semibold">Precipitation</p>
-          <p className="text-[17px] font-semibold">Wind</p>
-          <p className="text-[17px] font-semibold">Humidity</p>
+        <div className="flex flex-row gap-1 dailyfilter px-2 py-1 w-fit mb-2">
+          <p
+            className={`text-[17px] font-semibold ${
+              filterDetail === "templature" && "dailyfilter"
+            } px-2 cursor-pointer transition-all duration-200 ease-in-out rounded-xl`}
+            onClick={() => {
+              filterDetails("templature");
+            }}
+          >
+            Templature
+          </p>
+          <p
+            className={`text-[17px] font-semibold ${
+              filterDetail === "precipitation" && "dailyfilter"
+            } px-2 cursor-pointer transition-all duration-200 ease-in-out rounded-xl`}
+            onClick={() => {
+              filterDetails("precipitation");
+            }}
+          >
+            Precipitation
+          </p>
+          <p
+            className={`text-[17px] font-semibold ${
+              filterDetail === "wind" && "dailyfilter"
+            } px-2 cursor-pointer  transition-all duration-200 ease-in-out rounded-xl`}
+            onClick={() => {
+              filterDetails("wind");
+            }}
+          >
+            Wind
+          </p>
         </div>
 
-        {/* OverView */}
-        <div className="flex flex-row">
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
+        {/* Templature */}
+        {filterDetail === "templature" && (
+          <div className="flex flex-row">
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
             </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                Now
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-2xl text-[#000] relative z-10">
+                -1°
+              </div>
             </div>
           </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              Now
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-2xl text-[#000] relative z-10">
-              -1°
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* Precipitation */}
-        <div className="flex flex-row">
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
+        {filterDetail === "precipitation" && (
+          <div className="flex flex-row">
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
             </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
             </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                &lt;0.25
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="font-bold text-sm text-[#000] relative z-10">
+                10%
+              </div>
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
             </div>
           </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
+        )}
+
+        {/* Wind */}
+        {filterDetail === "wind" && (
+          <div className="flex flex-row">
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
             </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
             </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
+            </div>
+            <div className="daily-cards mx-1 mb-2">
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                3
+              </div>
+              <img
+                src={cloudyday3}
+                alt="cloudyday3"
+                className="weather m-auto"
+              />
+              <div className="text-sm text-[#444] relative z-10 font-bold">
+                16:00
+              </div>
             </div>
           </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-          <div className="daily-cards mx-1 mb-2">
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              &lt;0.25
-            </div>
-            <img src={cloudyday3} alt="cloudyday3" className="weather m-auto" />
-            <div className="font-bold text-sm text-[#000] relative z-10">
-              10%
-            </div>
-            <div className="text-sm text-[#444] relative z-10 font-bold">
-              16:00
-            </div>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* next days */}
