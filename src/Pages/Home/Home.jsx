@@ -6,9 +6,22 @@ import nivroLogo from "../../assets/Nivra.png";
 const Home = () => {
   const [filterDetail, setFilterDetail] = useState("templature");
   const [menu, setMenu] = useState(false);
+  const [menuItemClick, setMenuItemClick] = useState("");
+  const [showTips, setShowTips] = useState(false);
 
+  // Menu
   const displayMenu = () => setMenu((prev) => !prev);
 
+  const menuItemfilter = (item) => {
+    if (item === "tips") {
+      setMenuItemClick("tips");
+      setShowTips((prev) => !prev);
+    } else {
+      setMenuItemClick("about");
+    }
+  };
+
+  // weather details
   const filterDetails = (detail) => {
     if (detail === "templature") {
       setFilterDetail("templature");
@@ -21,8 +34,8 @@ const Home = () => {
 
   return (
     <div className="flex flex-col py-8 px-3 md:px-14 lg:px-20 min-w-0">
-      {/* search */}
-      <div className="flex flex-row items-center justify-between gap-2 mb-2 w-full">
+      {/* Top NavBar */}
+      <div className="flex flex-row items-center justify-between gap-2 w-full mb-1">
         <div className="relative flex items-center w-full md:w-[50%]">
           <img src={nivroLogo} alt="" className="size-10" />
           <input
@@ -68,35 +81,40 @@ const Home = () => {
       {/* Menu */}
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          menu ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+          menu ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"
         }`}
       >
         <div className="flex flex-col md:flex-row gap-1 menu px-2 py-1 w-full mb-2">
           <p
             className={`text-sm md:text-[17px] font-semibold ${
-              filterDetail === "templature" && "menuItem"
+              menuItemClick === "tips" && "menuItem"
             } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
-            onClick={() => filterDetails("templature")}
+            onClick={() => menuItemfilter("tips")}
           >
-            Templature
+            Daily Tips
           </p>
           <p
             className={`text-sm md:text-[17px] font-semibold ${
-              filterDetail === "precipitation" && "menuItem"
+              menuItemClick === "about" && "menuItem"
             } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
-            onClick={() => filterDetails("precipitation")}
+            onClick={() => menuItemfilter("about")}
           >
-            Precipitation
-          </p>
-          <p
-            className={`text-sm md:text-[17px] font-semibold ${
-              filterDetail === "wind" && "menuItem"
-            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
-            onClick={() => filterDetails("wind")}
-          >
-            Wind
+            About
           </p>
         </div>
+      </div>
+
+      <div
+        className={`menu overflow-hidden transition-all duration-300 p-2 px-4 ease-in-out ${
+          showTips ? "max-h-40 opacity-100 mb-3 mt-1" : "max-h-0 opacity-0 -mb-1"
+        }`}
+      >
+        <p className="text-sm text-[#232323] font-medium">
+          🧥 It’s cold in Kigali today — consider wearing a warm jacket!
+        </p>
+        <p className="text-sm text-[#232323] font-medium">
+          ☔ Light rain expected. Carry an umbrella just in case.
+        </p>
       </div>
 
       {/* weather */}
