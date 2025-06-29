@@ -206,6 +206,7 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
         inset 0 0 10px rgba(255, 255, 255, 0.9);
     overflow: hidden;
+    margin-bottom: 12px;
 }
 
 .back {
