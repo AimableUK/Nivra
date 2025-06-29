@@ -109,6 +109,7 @@ const Home = () => {
           showTips ? "max-h-40 opacity-100 mb-3 mt-1" : "max-h-0 opacity-0 -mb-1"
         }`}
       >
+        <h3 className="font-semibold text-sm">Your Personalized Tips:</h3>
         <p className="text-sm text-[#232323] font-medium">
           🧥 It’s cold in Kigali today — consider wearing a warm jacket!
         </p>
