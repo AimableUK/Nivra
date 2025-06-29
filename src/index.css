@@ -18,6 +18,8 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#A79DC9", endColorstr="#B2C8D4", GradientType=0);
 }
 
+/* ------- HOME ------- */
+
 /* search */
 .search {
     background: rgba(255, 255, 255, 0.08);
@@ -189,4 +191,29 @@ body {
     opacity: 0.4;
     pointer-events: none;
     z-index: 0;
+}
+
+
+
+
+/* -------- About us -------- */
+.aboutmain {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
+        inset 0 0 10px rgba(255, 255, 255, 0.9);
+    overflow: hidden;
+}
+
+.back {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
+        inset 0 0 10px rgba(255, 255, 255, 0.9);
 }

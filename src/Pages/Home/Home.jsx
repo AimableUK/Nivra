@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import cloudyday3 from "../../weatherCondition/animated/cloudy-day-3.svg";
 import temp from "../../assets/temp.png";
 import nivroLogo from "../../assets/Nivra.png";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [filterDetail, setFilterDetail] = useState("templature");
@@ -18,6 +19,7 @@ const Home = () => {
       setShowTips((prev) => !prev);
     } else {
       setMenuItemClick("about");
+      setMenu("false");
     }
   };
 
@@ -33,7 +35,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col py-8 px-3 md:px-14 lg:px-20 min-w-0">
+    <div className="flex flex-col py-4 px-3 md:px-14 lg:px-20 min-w-0">
       {/* Top NavBar */}
       <div className="flex flex-row items-center justify-between gap-2 w-full mb-1">
         <div className="relative flex items-center w-full md:w-[50%]">
@@ -93,20 +95,24 @@ const Home = () => {
           >
             Daily Tips
           </p>
-          <p
-            className={`text-sm md:text-[17px] font-semibold ${
-              menuItemClick === "about" && "menuItem"
-            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
-            onClick={() => menuItemfilter("about")}
-          >
-            About
-          </p>
+          <Link to="/aboutus">
+            <p
+              className={`text-sm md:text-[17px] font-semibold ${
+                menuItemClick === "about" && "menuItem"
+              } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
+              onClick={() => menuItemfilter("about")}
+            >
+              About
+            </p>
+          </Link>
         </div>
       </div>
 
       <div
         className={`menu overflow-hidden transition-all duration-300 p-2 px-4 ease-in-out ${
-          showTips ? "max-h-40 opacity-100 mb-3 mt-1" : "max-h-0 opacity-0 -mb-1"
+          showTips
+            ? "max-h-40 opacity-100 mb-3 mt-1"
+            : "max-h-0 opacity-0 -mb-1"
         }`}
       >
         <h3 className="font-semibold text-sm">Your Personalized Tips:</h3>
