@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const AboutUs = () => {
   return (
     <div className="min-h-screen pb-2">
-      <div className="m-2 md:m-4">
+      <div className="m-2 md:m-4 md:mx-10">
         {/* Top One */}
         <div className="aboutmain flex flex-row justify-between items-center pr-4 pl-2 py-1">
           <div>

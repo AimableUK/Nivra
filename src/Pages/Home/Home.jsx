@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import cloudyday3 from "../../weatherCondition/animated/cloudy-day-3.svg";
 import temp from "../../assets/temp.png";
-import nivroLogo from "../../assets/Nivra.png";
+import nivraLogo from "../../assets/Nivra.png";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -9,6 +9,7 @@ const Home = () => {
   const [menu, setMenu] = useState(false);
   const [menuItemClick, setMenuItemClick] = useState("");
   const [showTips, setShowTips] = useState(false);
+  const [showFavorites, setShowFavorites] = useState(false);
 
   // Menu
   const displayMenu = () => setMenu((prev) => !prev);
@@ -17,9 +18,17 @@ const Home = () => {
     if (item === "tips") {
       setMenuItemClick("tips");
       setShowTips((prev) => !prev);
-    } else {
+    } else if (item === "favorites") {
+      setMenuItemClick("favorites");
+      setShowFavorites((prev) => !prev);
+    } else if (item === "about") {
       setMenuItemClick("about");
       setMenu("false");
+    } else if (item === "settings") {
+      setMenuItemClick("settings");
+      setMenu("false");
+    } else {
+      setMenuItemClick(null);
     }
   };
 
@@ -39,7 +48,9 @@ const Home = () => {
       {/* Top NavBar */}
       <div className="flex flex-row items-center justify-between gap-2 w-full mb-1">
         <div className="relative flex items-center w-full md:w-[50%]">
-          <img src={nivroLogo} alt="" className="size-10" />
+          <Link to="/">
+            <img src={nivraLogo} alt="" className="size-10" />
+          </Link>
           <input
             type="text"
             placeholder="Location Search"
@@ -95,6 +106,14 @@ const Home = () => {
           >
             Daily Tips
           </p>
+          <p
+            className={`text-sm md:text-[17px] font-semibold ${
+              menuItemClick === "favorites" && "menuItem"
+            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
+            onClick={() => menuItemfilter("favorites")}
+          >
+            Favorites
+          </p>
           <Link to="/aboutus">
             <p
               className={`text-sm md:text-[17px] font-semibold ${
@@ -102,12 +121,23 @@ const Home = () => {
               } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
               onClick={() => menuItemfilter("about")}
             >
-              About
+              About Us
+            </p>
+          </Link>
+          <Link to="/settings">
+            <p
+              className={`text-sm md:text-[17px] font-semibold ${
+                menuItemClick === "settings" && "menuItem"
+              } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
+              onClick={() => menuItemfilter("settings")}
+            >
+              Settings
             </p>
           </Link>
         </div>
       </div>
 
+      {/* Daily tips */}
       <div
         className={`menu overflow-hidden transition-all duration-300 p-2 px-4 ease-in-out ${
           showTips
@@ -116,6 +146,23 @@ const Home = () => {
         }`}
       >
         <h3 className="font-semibold text-sm">Your Personalized Tips:</h3>
+        <p className="text-sm text-[#232323] font-medium">
+          🧥 It’s cold in Kigali today — consider wearing a warm jacket!
+        </p>
+        <p className="text-sm text-[#232323] font-medium">
+          ☔ Light rain expected. Carry an umbrella just in case.
+        </p>
+      </div>
+
+      {/* Favorites */}
+      <div
+        className={`menu overflow-hidden transition-all duration-300 p-2 px-4 ease-in-out ${
+          showFavorites
+            ? "max-h-40 opacity-100 mb-3 -mt-1"
+            : "max-h-0 opacity-0 -mb-4 "
+        }`}
+      >
+        <h3 className="font-semibold text-sm">Your Favorites:</h3>
         <p className="text-sm text-[#232323] font-medium">
           🧥 It’s cold in Kigali today — consider wearing a warm jacket!
         </p>

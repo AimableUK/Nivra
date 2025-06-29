@@ -11,6 +11,8 @@ const PageTitleUpdater = () => {
       title = "Home - Nivra";
     } else if (location.pathname === "/aboutus") {
       title = "AboutUs - Nivra";
+    } else if (location.pathname === "/settings") {
+      title = "Settings - Nivra";
     } else {
       title = "404 Page Not Found";
     }
