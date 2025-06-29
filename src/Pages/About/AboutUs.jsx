@@ -30,20 +30,20 @@ const AboutUs = () => {
 
         {/* About Main */}
         <section className="aboutmain p-3 px-4">
-          <h1 class="text-xl md:text-2xl font-bold mb-4 text-center">
+          <h1 className="text-xl md:text-2xl font-bold mb-4 text-center">
             About Nivra
           </h1>
-          <p class="text-base md:text-lg mb-4 leading-relaxed text-center">
+          <p className="text-base md:text-lg mb-4 leading-relaxed text-center">
             <strong>Nivra</strong> is your smart weather companion. Whether
             you're dressing for a cold morning or planning an outdoor walk,
             Nivra gives you accurate forecasts and smart suggestions — like when
             to carry an umbrella or wear a jacket.
           </p>
 
-          <div class="border-t border-white/30 my-6"></div>
+          <div className="border-t border-white/30 my-6"></div>
 
-          <h2 class="text-2xl font-semibold mb-2">🌟 Key Features</h2>
-          <ul class="list-disc pl-5 space-y-1 text-base">
+          <h2 className="text-2xl font-semibold mb-2">🌟 Key Features</h2>
+          <ul className="list-disc pl-5 space-y-1 text-base">
             <li>Daily and weekly forecasts</li>
             <li>Real-time outfit advice</li>
             <li>Mobile-first responsive design</li>
@@ -51,24 +51,24 @@ const AboutUs = () => {
             <li>Powered by accurate weather data</li>
           </ul>
 
-          <div class="border-t border-white/30 my-6"></div>
+          <div className="border-t border-white/30 my-6"></div>
 
-          <h2 class="text-2xl font-semibold mb-2">🌍 Data Source</h2>
-          <p class="text-base mb-4">
+          <h2 className="text-2xl font-semibold mb-2">🌍 Data Source</h2>
+          <p className="text-base mb-4">
             Weather data provided by&nbsp;
-            <span class="font-semibold text-blue-600">WeatherApi</span>
+            <span className="font-semibold text-blue-600">WeatherApi</span>
           </p>
 
-          <div class="border-t border-white/30 my-6"></div>
+          <div className="border-t border-white/30 my-6"></div>
 
-          <h2 class="text-2xl font-semibold mb-2">📬 Contact & Feedback</h2>
-          <p class="text-base">
+          <h2 className="text-2xl font-semibold mb-2">📬 Contact & Feedback</h2>
+          <p className="text-base">
             Have suggestions or feedback? We'd love to hear from you!
             <br />
             📧
             <a
               href="mailto:aimableukobizaba@gmail.com"
-              class="text-blue-500 hover:underline"
+              className="text-blue-500 hover:underline"
             >
               aimableukobizaba@gmail.com
             </a>
