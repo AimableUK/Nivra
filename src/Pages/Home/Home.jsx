@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import cloudyday3 from "../../weatherCondition/animated/cloudy-day-3.svg";
 import temp from "../../assets/temp.png";
-import nivroLogo from "../../../public/Nivro.png"
+import nivroLogo from "../../assets/Nivra.png";
 
 const Home = () => {
   const [filterDetail, setFilterDetail] = useState("templature");
@@ -19,13 +19,13 @@ const Home = () => {
   return (
     <div className="flex flex-col py-8 px-3 md:px-14 lg:px-20 min-w-0">
       {/* search */}
-      <div className="flex flex-row items-center justify-between mb-3">
-        <div className="relative flex items-center">
-          {/* <img src={nivroLogo} alt="" className="size-8 ml-2 mr-2" /> */}
+      <div className="flex flex-row items-center justify-between gap-3 mb-3 w-full">
+        <div className="relative flex items-center w-full md:w-[50%]">
+          <img src={nivroLogo} alt="" className="size-10" />
           <input
             type="text"
             placeholder="Location Search"
-            className="search glass-card relative rounded-2xl px-5 py-1 min-w-fit w-[75%] outline-none pr-10 border-2 focus:border-[#4ade80] shadow-2xl"
+            className="search glass-card w-full rounded-2xl px-5 py-1 outline-none pr-10 border-2 focus:border-[#4ade80] shadow-2xl"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -42,19 +42,20 @@ const Home = () => {
             />
           </svg>
         </div>
-        <div className="">
+
+        <div className="mr-1 md:mr-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={1.5}
+            strokeWidth={2}
             stroke="currentColor"
             className="size-6"
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
             />
           </svg>
         </div>
