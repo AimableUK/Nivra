@@ -8,15 +8,14 @@
 }
 
 body {
-    height: 100vh;
     margin: 0;
-    position: relative;
-    background: #a79dc9;
-    background: -webkit-linear-gradient(67deg, rgba(167, 157, 201, 1) 26%, rgba(180, 208, 217, 1) 50%, rgba(178, 200, 212, 1) 79%);
-    background: -moz-linear-gradient(67deg, rgba(167, 157, 201, 1) 26%, rgba(180, 208, 217, 1) 50%, rgba(178, 200, 212, 1) 79%);
+    min-height: 100vh;
     background: linear-gradient(67deg, rgba(167, 157, 201, 1) 26%, rgba(180, 208, 217, 1) 50%, rgba(178, 200, 212, 1) 79%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#A79DC9", endColorstr="#B2C8D4", GradientType=0);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
+
 
 /* ------- HOME ------- */
 
@@ -233,5 +232,3 @@ body {
     overflow: hidden;
     margin-bottom: 12px;
 }
-
-
