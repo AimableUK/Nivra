@@ -5,6 +5,9 @@ import nivroLogo from "../../assets/Nivra.png";
 
 const Home = () => {
   const [filterDetail, setFilterDetail] = useState("templature");
+  const [menu, setMenu] = useState(false);
+
+  const displayMenu = () => setMenu((prev) => !prev);
 
   const filterDetails = (detail) => {
     if (detail === "templature") {
@@ -19,7 +22,7 @@ const Home = () => {
   return (
     <div className="flex flex-col py-8 px-3 md:px-14 lg:px-20 min-w-0">
       {/* search */}
-      <div className="flex flex-row items-center justify-between gap-3 mb-3 w-full">
+      <div className="flex flex-row items-center justify-between gap-2 mb-2 w-full">
         <div className="relative flex items-center w-full md:w-[50%]">
           <img src={nivroLogo} alt="" className="size-10" />
           <input
@@ -50,7 +53,8 @@ const Home = () => {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="size-6"
+            className="size-8 p-1 cursor-pointer rounded-full border search active:scale-75 transition-all ease-in duration-150"
+            onClick={displayMenu}
           >
             <path
               strokeLinecap="round"
@@ -58,6 +62,40 @@ const Home = () => {
               d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
             />
           </svg>
+        </div>
+      </div>
+
+      {/* Menu */}
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          menu ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="flex flex-col md:flex-row gap-1 menu px-2 py-1 w-full mb-2">
+          <p
+            className={`text-sm md:text-[17px] font-semibold ${
+              filterDetail === "templature" && "menuItem"
+            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
+            onClick={() => filterDetails("templature")}
+          >
+            Templature
+          </p>
+          <p
+            className={`text-sm md:text-[17px] font-semibold ${
+              filterDetail === "precipitation" && "menuItem"
+            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
+            onClick={() => filterDetails("precipitation")}
+          >
+            Precipitation
+          </p>
+          <p
+            className={`text-sm md:text-[17px] font-semibold ${
+              filterDetail === "wind" && "menuItem"
+            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
+            onClick={() => filterDetails("wind")}
+          >
+            Wind
+          </p>
         </div>
       </div>
 
@@ -166,7 +204,7 @@ const Home = () => {
           <p
             className={`text-sm md:text-[17px] font-semibold ${
               filterDetail === "templature" && "dailyfilter"
-            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl`}
+            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
             onClick={() => {
               filterDetails("templature");
             }}
@@ -176,7 +214,7 @@ const Home = () => {
           <p
             className={`text-sm md:text-[17px] font-semibold ${
               filterDetail === "precipitation" && "dailyfilter"
-            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl`}
+            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
             onClick={() => {
               filterDetails("precipitation");
             }}
@@ -186,7 +224,7 @@ const Home = () => {
           <p
             className={`text-sm md:text-[17px] font-semibold ${
               filterDetail === "wind" && "dailyfilter"
-            } px-2 cursor-pointer  transition-all duration-100 ease-in-out rounded-xl`}
+            } px-2 cursor-pointer  transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
             onClick={() => {
               filterDetails("wind");
             }}
