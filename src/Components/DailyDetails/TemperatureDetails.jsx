@@ -1,4 +1,4 @@
-export default function TemperatureDetails({ hourly }) {
+export default function TemperatureDetails({ hourly = [] }) {
   if (!hourly.length) return null;
 
   return (
