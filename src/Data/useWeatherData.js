@@ -14,8 +14,8 @@ export default function useWeather(city = "Kigali") {
   const hourly24 = (() => {
     if (!data) return [];
 
-    const day0 = data.forecast.forecastday?.[0]?.hour ?? [];
-    const day1 = data.forecast.forecastday?.[1]?.hour ?? [];
+    const day0 = data?.forecast.forecastday?.[0]?.hour ?? [];
+    const day1 = data?.forecast.forecastday?.[1]?.hour ?? [];
 
     // WeatherAPI gives you the station’s local time — use it!
     const apiLocalHour = new Date(data.location.localtime).getHours();
