@@ -25,8 +25,7 @@ const Home = () => {
   const { hourly24, isLoading, error } = useWeather("Kigali");
 
   if (isLoading) return <p>Loading…</p>;
-  if (error)     return <p>Failed to load weather.</p>;
-  if (!hourly24.length) return <div>No data available</div>;
+  if (error) return <p>Failed to load weather.</p>;
 
   const currentHour = new Date().getHours();
   const dailyData = hourly24?.[currentHour];
