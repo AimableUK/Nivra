@@ -3,13 +3,18 @@ import cloudyday3 from "../../weatherCondition/animated/cloudy-day-3.svg";
 import temp from "../../assets/temp.png";
 import nivraLogo from "../../assets/Nivra.png";
 import { Link } from "react-router-dom";
+import useWeatherDetailStore from "../../Store/useWeatherDetailStore";
 
 const Home = () => {
-  const [filterDetail, setFilterDetail] = useState("templature");
   const [menu, setMenu] = useState(false);
   const [menuItemClick, setMenuItemClick] = useState("");
   const [showTips, setShowTips] = useState(false);
   const [showFavorites, setShowFavorites] = useState(false);
+
+  const filterDetail = useWeatherDetailStore((state) => state.filterDetail);
+  const setFilterDetail = useWeatherDetailStore(
+    (state) => state.setFilterDetail
+  );
 
   // Menu
   const displayMenu = () => setMenu((prev) => !prev);
@@ -33,15 +38,7 @@ const Home = () => {
   };
 
   // weather details
-  const filterDetails = (detail) => {
-    if (detail === "templature") {
-      setFilterDetail("templature");
-    } else if (detail === "precipitation") {
-      setFilterDetail("precipitation");
-    } else {
-      setFilterDetail("wind");
-    }
-  };
+  const handleFilter = (detail) => setFilterDetail(detail);
 
   return (
     <div className="flex flex-col py-4 px-3 md:px-14 lg:px-20 min-w-0">
@@ -272,41 +269,22 @@ const Home = () => {
 
       {/* Overview */}
       <div className="main mb-3 flex flex-col py-4 px-3">
-        <div className="flex flex-col  md:flex-row gap-1 dailyfilter px-2 py-1 w-full md:w-fit mb-2">
-          <p
-            className={`text-sm md:text-[17px] font-semibold ${
-              filterDetail === "templature" && "dailyfilter"
-            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
-            onClick={() => {
-              filterDetails("templature");
-            }}
-          >
-            Templature
-          </p>
-          <p
-            className={`text-sm md:text-[17px] font-semibold ${
-              filterDetail === "precipitation" && "dailyfilter"
-            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
-            onClick={() => {
-              filterDetails("precipitation");
-            }}
-          >
-            Precipitation
-          </p>
-          <p
-            className={`text-sm md:text-[17px] font-semibold ${
-              filterDetail === "wind" && "dailyfilter"
-            } px-2 cursor-pointer  transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
-            onClick={() => {
-              filterDetails("wind");
-            }}
-          >
-            Wind
-          </p>
+        <div className="flex flex-col md:flex-row gap-1 dailyfilter px-2 py-1 w-full md:w-fit mb-2">
+          {["temperature", "precipitation", "wind"].map((detail) => (
+            <p
+              key={detail}
+              className={`text-sm md:text-[17px] font-semibold ${
+                filterDetail === detail ? "dailyfilter" : ""
+              } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
+              onClick={() => handleFilter(detail)}
+            >
+              {detail.charAt(0).toUpperCase() + detail.slice(1)}
+            </p>
+          ))}
         </div>
 
         {/* Templature */}
-        {filterDetail === "templature" && (
+        {filterDetail === "temperature" && (
           <div className="flex flex-row overflow-x-auto w-full">
             <div className="daily-cards mx-1 mb-2">
               <div className="text-sm text-[#444] relative z-10 font-bold">

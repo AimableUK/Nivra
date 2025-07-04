@@ -241,17 +241,11 @@ const AboutUs = () => {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <label className="text-gray-700">Enable Weather Alerts</label>
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4 shadow-md"
-                  />
+                  <input type="checkbox" className="h-4 w-4 shadow-md" />
                 </div>
                 <div className="flex items-center justify-between">
                   <label className="text-gray-700">Daily Summary</label>
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4 shadow-md"
-                  />
+                  <input type="checkbox" className="h-4 w-4 shadow-md" />
                 </div>
               </div>
             </section>
