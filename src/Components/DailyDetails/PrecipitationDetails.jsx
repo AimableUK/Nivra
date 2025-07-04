@@ -9,7 +9,7 @@ const PrecipitationDetails = () => {
           <img src={cloudyday3} alt="cloudy" className="weather m-auto" />
           <div className="font-bold text-sm text-[#000]">10%</div>
           <div className="text-sm text-[#444] font-bold">
-            {hour.toString().padStart(2, "0")}:00
+            {hour === 0 ? "Now" : `${hour.toString().padStart(2, "0")}:00`}
           </div>
         </div>
       ))}

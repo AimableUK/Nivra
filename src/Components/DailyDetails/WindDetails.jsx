@@ -8,7 +8,7 @@ const WindDetails = () => {
           <div className="text-sm text-[#444] font-bold">3</div>
           <img src={cloudyday3} alt="cloudy" className="weather m-auto" />
           <div className="text-sm text-[#444] font-bold">
-            {hour.toString().padStart(2, "0")}:00
+            {hour === 0 ? "Now" : `${hour.toString().padStart(2, "0")}:00`}
           </div>
         </div>
       ))}
