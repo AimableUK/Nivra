@@ -26,6 +26,7 @@ const Home = () => {
 
   if (isLoading) return <p>Loading…</p>;
   if (error)     return <p>Failed to load weather.</p>;
+  if (!hourly24.length) return <div>No data available</div>;
 
   const currentHour = new Date().getHours();
   const dailyData = hourly24?.[currentHour];
