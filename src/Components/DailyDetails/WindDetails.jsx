@@ -1,17 +1,33 @@
-import cloudyday3 from "../../weatherCondition/static/cloudy-day-3.svg";
+const WindDetails = ({ hourly = [] }) => {
+  if (!hourly.length) return null;
 
-const WindDetails = () => {
   return (
     <div className="flex overflow-x-auto scrollbar-hide whitespace-nowrap w-full">
-      {Array.from({ length: 24 }).map((_, hour) => (
-        <div key={hour} className="daily-cards mx-1 mb-2 inline-block">
-          <div className="text-sm text-[#444] font-bold">3</div>
-          <img src={cloudyday3} alt="cloudy" className="weather m-auto" />
-          <div className="text-sm text-[#444] font-bold">
-            {hour === 0 ? "Now" : `${hour.toString().padStart(2, "0")}:00`}
+      {hourly.map((h, idx) => {
+        const hourLabel =
+          idx === 0
+            ? "Now"
+            : new Date(h.time).getHours().toString().padStart(2, "0") + ":00";
+
+        return (
+          <div key={h.time} className="daily-cards mx-1 mb-2 inline-block">
+            {/* Wind speed (kph) */}
+            <div className="text-sm text-[#444] font-bold">
+              {h.wind_kph != null ? `${h.wind_kph} km/h` : "—"}
+            </div>
+
+            {/* Weather icon */}
+            <img
+              src={`https:${h.condition.icon}`}
+              alt={h.condition?.text ?? "wind"}
+              className="weather m-auto"
+            />
+
+            {/* Time label */}
+            <div className="text-sm text-[#444] font-bold">{hourLabel}</div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

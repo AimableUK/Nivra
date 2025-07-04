@@ -8,6 +8,8 @@ import TemperatureDetails from "../../Components/DailyDetails/TemperatureDetails
 import PrecipitationDetails from "../../Components/DailyDetails/PrecipitationDetails";
 import WindDetails from "../../Components/DailyDetails/WindDetails";
 import OtherDays from "../../Components/OtherDays/OtherDays";
+import useWeather from "../../Data/useWeatherData";
+import DateHeader from "../../Components/DateHeader/DateHeader";
 
 const Home = () => {
   const [menu, setMenu] = useState(false);
@@ -19,6 +21,14 @@ const Home = () => {
   const setFilterDetail = useWeatherDetailStore(
     (state) => state.setFilterDetail
   );
+
+  const { hourly24, isLoading, error } = useWeather("Kigali");
+
+  if (isLoading) return <p>Loading…</p>;
+  if (error)     return <p>Failed to load weather.</p>;
+
+  const currentHour = new Date().getHours();
+  const dailyData = hourly24?.[currentHour];
 
   // Menu
   const displayMenu = () => setMenu((prev) => !prev);
@@ -177,9 +187,13 @@ const Home = () => {
         {/* weather condition */}
         <div>
           <img
-            src={cloudyday3}
-            alt="cloudyday3"
-            className="size-40 md:size-64"
+            src={
+              dailyData?.condition?.icon
+                ? `https:${dailyData.condition.icon}`
+                : cloudyday3
+            }
+            alt={dailyData?.condition?.text}
+            className="size-32 sm:size-36 md:size-40"
           />
           <div className="flex-row items-center hidden md:flex">
             <svg
@@ -217,33 +231,37 @@ const Home = () => {
                 className="hidden md:block size-20 md:size-24"
               />
               <p className="text-3xl md:text-4xl font-bold text-[#333]">
-                -3&#176;
+                {dailyData?.temp_c}&#176;
               </p>
             </div>
             <div className="Clima text-end">
               <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
                 Pressure:&nbsp;
                 <span className="text-[13px] font-semibold md:font-bold">
-                  764 mm
+                  {dailyData?.precip_mm} mm
                 </span>
               </p>
               <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
                 Humidity:&nbsp;
-                <span className="font-semibold md:font-bold">69 %</span>
+                <span className="font-semibold md:font-bold">
+                  {dailyData?.humidity}%
+                </span>
               </p>
               <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
                 Precipition:&nbsp;
-                <span className="font-semibold md:font-bold">5%</span>
+                <span className="font-semibold md:font-bold">
+                  {dailyData?.precip_mm} mm
+                </span>
               </p>
               <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
                 Wind:&nbsp;
-                <span className="font-semibold md:font-bold">2.1 m/s</span>
+                <span className="font-semibold md:font-bold">
+                  {dailyData?.wind_kph} kph
+                </span>
               </p>
             </div>
           </div>
-          <p className="text-[12px] md:text-xl font-semibold items-end text-[#232323] mt-2 md:mt-0">
-            January 8, <span>Sunday</span>
-          </p>
+          <DateHeader />
           <div className="flex-row items-center flex md:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -288,9 +306,13 @@ const Home = () => {
           ))}
         </div>
 
-        {filterDetail === "temperature" && <TemperatureDetails />}
-        {filterDetail === "precipitation" && <PrecipitationDetails />}
-        {filterDetail === "wind" && <WindDetails />}
+        {filterDetail === "temperature" && (
+          <TemperatureDetails hourly={hourly24} />
+        )}
+        {filterDetail === "precipitation" && (
+          <PrecipitationDetails hourly={hourly24} />
+        )}
+        {filterDetail === "wind" && <WindDetails hourly={hourly24} />}
       </div>
 
       {/* next days */}
