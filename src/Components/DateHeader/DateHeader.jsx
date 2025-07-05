@@ -7,8 +7,8 @@ const DateHeader = () => {
   });
 
   return (
-    <p className="text-[12px] md:text-xl font-semibold items-end text-[#232323] mt-2 md:mt-0">
-      Today • {dayName}, {monthDay}
+    <p className="text-[11px] md:text-sm lg:text-xl font-semibold items-end text-end text-[#232323] mt-1 md:mt-0">
+      {dayName}, {monthDay}
     </p>
   );
 };
