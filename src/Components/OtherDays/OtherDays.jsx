@@ -29,8 +29,8 @@ const OtherDays = () => {
               alt={item.day.condition.text}
               className="weather m-auto w-16 h-16"
             />
-            <div className="font-bold text-3xl text-[#000] relative z-10">
-              {Math.round(item.day.avgtemp_c)}°
+            <div className="font-bold text-3xl text-[#202020] relative z-10">
+              {Math.round(item.day.avgtemp_c)}&#176;
             </div>
             <div className="text-sm text-[#333] relative z-10">{monthDay}</div>
             <div className="font-bold text-sm text-[#444] relative z-10">
