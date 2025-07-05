@@ -184,7 +184,7 @@ const Home = () => {
       {/* weather */}
       <div className="main flex md:flex-row justify-between gap-10 mb-3 p-4 md:px-20 lg:px-10">
         {/* weather condition */}
-        <div>
+        <div className="flex flex-col justify-between">
           <img
             src={`https:${dailyData.condition.icon}`}
             alt={dailyData?.condition?.text}
@@ -230,6 +230,9 @@ const Home = () => {
               </p>
             </div>
             <div className="Clima text-end">
+              <p className="text-[12px] md:font-semibold text-[#232323] text-nowrap">
+                {dailyData?.condition.text}
+              </p>
               <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
                 Feels like:&nbsp;
                 <span className="text-[13px] font-semibold md:font-bold">
@@ -317,7 +320,9 @@ const Home = () => {
       </div>
 
       {/* next days */}
-      <OtherDays />
+      <div className="other mb-3 flex flex-col py-4 px-3">
+        <OtherDays />
+      </div>
     </div>
   );
 };

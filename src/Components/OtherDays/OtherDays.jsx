@@ -1,36 +1,44 @@
 import React from "react";
-import cloudyday3 from "../../weatherCondition/static/cloudy-day-3.svg";
+import useDaysWeather from "../../Data/useDaysWeatherData";
 
 const OtherDays = () => {
+  const { isLoading, error, forecastdays } = useDaysWeather("Kigali");
+
+  if (isLoading) return <p>Loading…</p>;
+  if (error) return <p>Failed to load data</p>;
+
   return (
-    <div className="flex md:flex-row flex-wrap md:justify-center gap-x-2 md:gap-4 px-1 md:px-2">
-      {[
-        { day: "Mon", date: "January 9" },
-        { day: "Tue", date: "January 9" },
-        { day: "Wed", date: "January 9" },
-        { day: "Thurs", date: "January 9" },
-        { day: "Fri", date: "January 9" },
-        { day: "Sat", date: "January 9" },
-        { day: "Sun", date: "January 9" },
-      ].map((item, idx) => (
-        <div
-          key={idx}
-          className="glass-cards mb-2 px-3 py-2 flex flex-col items-center min-w-[110px]"
-        >
-          <img
-            src={cloudyday3}
-            alt="cloudyday3"
-            className="weather m-auto w-16 h-16"
-          />
-          <div className="font-bold text-3xl text-[#000] relative z-10">
-            -1°
+    <div className="flex scrollbar-hide whitespace-nowrap overflow-x-auto gap-x-1 md:gap-2 px-1">
+      {forecastdays.map((item, idx) => {
+        const dateObj = new Date(item.date);
+        const dayName = dateObj.toLocaleDateString("en-US", {
+          weekday: "short",
+        });
+        const monthDay = dateObj.toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+        });
+
+        return (
+          <div
+            key={idx}
+            className="glass-cards mb-2 px-3 py-2 flex flex-col items-center min-w-[110px]"
+          >
+            <img
+              src={`https:${item.day.condition.icon}`}
+              alt={item.day.condition.text}
+              className="weather m-auto w-16 h-16"
+            />
+            <div className="font-bold text-3xl text-[#000] relative z-10">
+              {Math.round(item.day.avgtemp_c)}°
+            </div>
+            <div className="text-sm text-[#333] relative z-10">{monthDay}</div>
+            <div className="font-bold text-sm text-[#444] relative z-10">
+              {dayName}
+            </div>
           </div>
-          <div className="text-sm text-[#333] relative z-10">{item.date}</div>
-          <div className="font-bold text-sm text-[#444] relative z-10">
-            {item.day}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

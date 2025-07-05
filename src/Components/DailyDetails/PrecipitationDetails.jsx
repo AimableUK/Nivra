@@ -13,7 +13,7 @@ const PrecipitationDetails = ({ hourly = [] }) => {
           <div key={h.time} className="daily-cards mx-1 mb-2 inline-block">
             {/* Precipitation in mm (fallback <0.25) */}
             <div className="text-sm text-[#444] font-bold">
-              {h.precip_mm != null ? `${h.precip_mm} mm` : "<0.25 mm"}
+              {h.precip_mm != null ? `${h.precip_mm} mm` : "<0.25 mm"}
             </div>
 
             {/* Weather icon */}
@@ -24,7 +24,7 @@ const PrecipitationDetails = ({ hourly = [] }) => {
             />
 
             {/* Chance of rain */}
-            <div className="font-bold text-sm text-[#000]">
+            <div className="font-bold text-sm text-[#202020]">
               {h.chance_of_rain != null ? `${h.chance_of_rain}%` : "–"}
             </div>
 

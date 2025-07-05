@@ -14,10 +14,12 @@ export default function TemperatureDetails({ hourly = [] }) {
             <div className="text-sm text-[#444] font-bold">{h.temp_c}°</div>
             <img
               src={`https:${h.condition.icon}`}
-              alt={h.condition.text}
+              alt={h.condition?.text ?? "temperature"}
               className="weather m-auto"
             />
-            <div className="font-bold text-xl text-[#000]">{h.temp_c}°</div>
+            <div className="font-bold text-xl text-[#202020]">
+              {h.temp_c != null ? `${h.temp_c}` : "-"}&#176;
+            </div>
             <div className="text-sm text-[#444] font-bold">{hourLabel}</div>
           </div>
         );
