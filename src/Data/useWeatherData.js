@@ -4,7 +4,7 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = "https://api.weatherapi.com/v1/forecast.json";
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
-export default function useWeather(city = "london") {
+export default function useWeather(city = "kigali") {
   // ask WeatherAPI for *two* forecast days
   const url = `${BASE_URL}?key=${API_KEY}&q=${city}&days=2&aqi=no&alerts=no`;
   const { data, error } = useSWR(url, fetcher);

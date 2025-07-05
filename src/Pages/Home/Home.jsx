@@ -21,7 +21,7 @@ const Home = () => {
     (state) => state.setFilterDetail
   );
 
-  const { location, hourly24, isLoading, error } = useWeather("london");
+  const { location, hourly24, isLoading, error } = useWeather("kigali");
 
   if (isLoading) return <p>Loading…</p>;
   if (error) return <p>Failed to load weather.</p>;
