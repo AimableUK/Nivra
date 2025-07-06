@@ -183,6 +183,7 @@ const Home = () => {
 
       {/* weather */}
       <div className="main flex md:flex-row justify-between gap-10 mb-3 p-4 md:px-20 lg:px-10">
+        {/* Favorites and more weather details */}
         {/* weather condition */}
         <div className="flex flex-col justify-between">
           <img
