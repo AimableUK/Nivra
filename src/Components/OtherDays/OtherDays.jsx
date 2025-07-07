@@ -1,8 +1,10 @@
 import React from "react";
 import useDaysWeather from "../../Data/useDaysWeatherData";
+import useSettingsStore from "../../Store/useSettingsStore";
 
 const OtherDays = ({ onSelectDay, selectedDate }) => {
   const { isLoading, error, forecastdays } = useDaysWeather("Kigali");
+  const tempUnit = useSettingsStore((state) => state.settings.temp_Unit);
 
   if (isLoading) return <p>Loading…</p>;
   if (error) return <p>Failed to load data</p>;
@@ -22,7 +24,12 @@ const OtherDays = ({ onSelectDay, selectedDate }) => {
         const isActive =
           selectedDate &&
           new Date(selectedDate).toDateString() ===
-          new Date(dayData.date).toDateString();
+            new Date(dayData.date).toDateString();
+
+        const temp =
+          tempUnit === "f"
+            ? Math.round(dayData.day.avgtemp_f)
+            : Math.round(dayData.day.avgtemp_c);
 
         return (
           <div
@@ -38,7 +45,7 @@ const OtherDays = ({ onSelectDay, selectedDate }) => {
               className="weather m-auto w-16 h-16"
             />
             <div className="font-bold text-3xl text-[#202020]">
-              {Math.round(dayData.day.avgtemp_c)}&#176;
+              {temp}&#176;
             </div>
             <div className="text-sm text-[#333]">{monthDay}</div>
             <div className="font-bold text-sm text-[#444]">{dayName}</div>

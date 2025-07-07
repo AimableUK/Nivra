@@ -1,4 +1,9 @@
+import React from "react";
+import useSettingsStore from "../../Store/useSettingsStore";
+
 export default function TemperatureDetails({ hourly = [] }) {
+  const tempUnit = useSettingsStore((state) => state.settings.temp_Unit);
+
   if (!hourly.length) return null;
 
   function getHourLabel(h) {
@@ -21,23 +26,27 @@ export default function TemperatureDetails({ hourly = [] }) {
 
   return (
     <div className="flex overflow-x-auto scrollbar-hide whitespace-nowrap w-full">
-      {hourly.map((h, idx) => {
-        const hourLabel =
-          idx === 0
-            ? "Now"
-            : new Date(h.time).getHours().toString().padStart(2, "0") + ":00";
+      {hourly.map((h) => {
+        const tempValue = tempUnit === "c" ? h.temp_c ?? "-" : h.temp_f ?? "-";
 
         return (
           <div key={h.time} className="daily-cards mx-1 mb-2 inline-block">
-            <div className="text-sm text-[#444] font-bold">{h.temp_c}°</div>
+            <div className="text-sm text-[#444] font-bold">
+              {tempValue !== "-"
+                ? `${tempValue}°${tempUnit.toUpperCase()}`
+                : "-"}
+            </div>
+
             <img
               src={`https:${h.condition.icon}`}
               alt={h.condition?.text ?? "temperature"}
               className="weather m-auto"
             />
+
             <div className="font-bold text-xl text-[#202020]">
-              {h.temp_c != null ? `${h.temp_c}` : "-"}&#176;
+              {tempValue !== "-" ? `${tempValue}°` : "-"}
             </div>
+
             <div className="text-sm text-[#444] font-bold">
               {getHourLabel(h)}
             </div>

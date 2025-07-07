@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useSettingsStore from "../../Store/useSettingsStore";
 
 const SiteSettings = () => {
@@ -9,8 +9,11 @@ const SiteSettings = () => {
 
   const settings = useSettingsStore((s) => s.settings);
   const updateSettings = useSettingsStore((s) => s.updateSettings);
+  const resetSiteData = useSettingsStore((s) => s.resetSiteData);
 
   const [formData, setFormData] = useState(settings);
+
+  const navigate = useNavigate()
 
   useEffect(() => setFormData(settings), [settings]);
 
@@ -34,12 +37,16 @@ const SiteSettings = () => {
   //   delete button click
   const deleteData = () => {
     setDeleteDetails(true);
-    setDeleteMessage("Data Deleted Successfully!!");
+    setDeleteMessage("Data Erased Successfully!!");
+
+    resetSiteData();
+    localStorage.removeItem("nivra-settings");
 
     setTimeout(() => {
       setDeleteMessage("");
+      navigate("/")
       onCancel();
-    }, 2000);
+    }, 100);
   };
 
   //   Closing delete dialog

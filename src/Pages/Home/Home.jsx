@@ -8,6 +8,7 @@ import WindDetails from "../../Components/DailyDetails/WindDetails";
 import OtherDays from "../../Components/OtherDays/OtherDays";
 import useWeather from "../../Data/useWeatherData";
 import WeatherDetails from "../../Components/WeatherDetails.jsx/WeatherDetails";
+import getDailyTips from "../../utils/getDailyTips";
 
 const Home = () => {
   const [menu, setMenu] = useState(false);
@@ -34,7 +35,7 @@ const Home = () => {
       setDailyData(current);
       setHourlyData(hourly24);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
 
   if (isLoading || !dailyData) return <p>Loading…</p>;
@@ -42,16 +43,24 @@ const Home = () => {
 
   const onSelectDay = (dayData) => {
     const d = dayData.day;
+    const h = dayData.hour;
+
     setDailyData({
       temp_c: d.avgtemp_c,
-      feelslike_c: d.avgtemp_c,
-      pressure_mb: d.pressure_mb ?? "—",
+      temp_f: d.avgtemp_f,
+      feelslike_c: h.avgfeelslike_c,
+      feelslike_f: h.avgfeelslike_f,
+      pressure_mb: h.pressure_mb,
+      pressure_in: h.pressure_in,
       humidity: d.avghumidity,
       precip_mm: d.totalprecip_mm,
+      precip_in: d.totalprecip_in,
       wind_kph: d.maxwind_kph,
+      wind_mph: d.maxwind_mph,
       condition: d.condition,
       date: dayData.date,
     });
+
     setHourlyData(dayData.hour);
     setSelectedDate(dayData.date);
   };
@@ -79,6 +88,8 @@ const Home = () => {
 
   // weather details
   const handleFilter = (detail) => setFilterDetail(detail);
+
+  const tips = getDailyTips(showTips, dailyData, location?.name);
 
   return (
     <div className="flex flex-col py-4 px-3 md:px-14 lg:px-20 min-w-0">
@@ -178,17 +189,16 @@ const Home = () => {
       <div
         className={`menu overflow-hidden transition-all duration-300 p-2 px-4 ease-in-out ${
           showTips
-            ? "max-h-40 opacity-100 mb-3 mt-1"
+            ? "max-h-60 opacity-100 mb-3 mt-1"
             : "max-h-0 opacity-0 -mb-1"
         }`}
       >
-        <h3 className="font-semibold text-sm">Your Personalized Tips:</h3>
-        <p className="text-sm text-[#232323] font-medium">
-          🧥 It’s cold in Kigali today — consider wearing a warm jacket!
-        </p>
-        <p className="text-sm text-[#232323] font-medium">
-          ☔ Light rain expected. Carry an umbrella just in case.
-        </p>
+        <h3 className="font-semibold text-sm mb-1">Your Personalized Tips:</h3>
+        {tips.map((tip, index) => (
+          <p key={index} className="text-sm text-[#232323] font-medium">
+            {tip}
+          </p>
+        ))}
       </div>
 
       {/* Favorites */}
@@ -209,7 +219,11 @@ const Home = () => {
       </div>
 
       {/* weather */}
-      <WeatherDetails dailyData={dailyData} location={location} />
+      <WeatherDetails
+        dailyData={dailyData}
+        location={location}
+        selectedDate={selectedDate}
+      />
 
       {/* Overview */}
       <div className="main mb-3 flex flex-col py-4 px-3">
