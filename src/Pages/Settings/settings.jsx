@@ -1,10 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useSettingsStore from "../../Store/useSettingsStore";
 
-const AboutUs = () => {
+const SiteSettings = () => {
   const [resetSiteDataDialogOpen, setResetSiteDataDialogOpen] = useState(false);
   const [deleteDetails, setDeleteDetails] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState("");
+
+  const settings = useSettingsStore((s) => s.settings);
+  const updateSettings = useSettingsStore((s) => s.updateSettings);
+
+  const [formData, setFormData] = useState(settings);
+
+  useEffect(() => setFormData(settings), [settings]);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => {
+      const updated = {
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      };
+      updateSettings(updated);
+      return updated;
+    });
+  };
 
   //   delete dialog
   const resetSiteDataDialog = () => {
@@ -76,179 +96,167 @@ const AboutUs = () => {
               &nbsp;Site Settings
             </h1>
 
-            {/* Location Preferences */}
-            <section>
-              <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="size-5 md:size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+            <form>
+              {/* Location Preferences */}
+              <section>
+                <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="size-5 md:size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                      />
+                    </svg>
+                  </span>
+                  &nbsp;Location Preferences
+                </h2>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-gray-700">Default City</label>
+                    <input
+                      placeholder="e.g. Kigali"
+                      name="defaultCity"
+                      value={formData.defaultCity}
+                      onChange={handleChange}
+                      className="border-2 focus:border-[#086bae] shadow-xl focus:shadow-inner rounded px-4 py-1 w-1/2 outline-none"
                     />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <label className="text-gray-700">Use My Location</label>
+                    <input
+                      type="checkbox"
+                      name="myLocation"
+                      checked={formData.myLocation}
+                      onChange={handleChange}
+                      className="h-4 w-4 shadow-md"
                     />
-                  </svg>
-                </span>
-                &nbsp;Location Preferences
-              </h2>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Default City</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Kigali"
-                    className="border-2 focus:border-[#086bae] shadow-xl focus:shadow-inner rounded px-4 py-1 w-1/2 outline-none"
-                  />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Use My Location</label>
-                  <input type="checkbox" className="h-4 w-4 shadow-md" />
-                </div>
-              </div>
-            </section>
+              </section>
 
-            {/* Units */}
-            <section>
-              <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.7}
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z"
-                    />
-                  </svg>
-                </span>
-                &nbsp;Units & Measurements
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Temperature Unit</label>
-                  <select className="outline-none cursor-pointer shadow-md rounded-md border px-3 py-1">
-                    <option>°C</option>
-                    <option>°F</option>
-                  </select>
+              {/* Units */}
+              <section>
+                <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.7}
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z"
+                      />
+                    </svg>
+                  </span>
+                  &nbsp;Units & Measurements
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-gray-700">Temperature Unit</label>
+                    <select
+                      name="temp_Unit"
+                      value={formData.temp_Unit}
+                      onChange={handleChange}
+                      className="outline-none cursor-pointer shadow-md rounded-md border px-3 py-1"
+                    >
+                      <option value="c">&#176;C</option>
+                      <option value="f">&#176;F</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <label className="text-gray-700">Wind Speed</label>
+                    <select
+                      name="wind_Unit"
+                      value={formData.wind_Unit}
+                      onChange={handleChange}
+                      className="outline-none cursor-pointer shadow-md rounded-md border px-3 py-1"
+                    >
+                      <option value="kph">kph</option>
+                      <option value="mph">mph</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <label className="text-gray-700">Pressure</label>
+                    <select
+                      name="pres_Unit"
+                      value={formData.pres_Unit}
+                      onChange={handleChange}
+                      className="border px-3 py-1 outline-none cursor-pointer shadow-md rounded-md"
+                    >
+                      <option value="mb">mb</option>
+                      <option value="in">in</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <label className="text-gray-700">Precipitation</label>
+                    <select
+                      name="precip_Unit"
+                      value={formData.precip_Unit}
+                      onChange={handleChange}
+                      className="border px-3 py-1 outline-none cursor-pointer shadow-md rounded-md"
+                    >
+                      <option>mm</option>
+                      <option>in</option>
+                    </select>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Wind Speed</label>
-                  <select className="outline-none cursor-pointer shadow-md rounded-md border px-3 py-1">
-                    <option>km/h</option>
-                    <option>mph</option>
-                  </select>
-                </div>
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Pressure</label>
-                  <select className="border px-3 py-1 outline-none cursor-pointer shadow-md rounded-md">
-                    <option>hPa</option>
-                    <option>mmHg</option>
-                  </select>
-                </div>
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Time Format</label>
-                  <select className="border px-3 py-1 outline-none cursor-pointer shadow-md rounded-md">
-                    <option>24h</option>
-                    <option>12h</option>
-                  </select>
-                </div>
-              </div>
-            </section>
+              </section>
 
-            {/* Appearance */}
-            <section>
-              <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="size-5 md:size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+              {/* Notifications */}
+              <section>
+                <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="size-5 md:size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5"
+                      />
+                    </svg>
+                  </span>
+                  &nbsp;Notifications
+                </h2>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-gray-700">
+                      Enable Weather Alerts
+                    </label>
+                    <input
+                      type="checkbox"
+                      name="weather_Alerts"
+                      checked={formData.weather_Alerts}
+                      onChange={handleChange}
+                      className="h-4 w-4 shadow-md"
                     />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                    />
-                  </svg>
-                </span>
-                &nbsp;Appearance
-              </h2>
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Theme</label>
-                  <select className="border px-3 py-1 outline-none cursor-pointer shadow-md rounded-md">
-                    <option>Auto</option>
-                    <option>Light</option>
-                    <option>Dark</option>
-                  </select>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Font Size</label>
-                  <select className="border px-3 py-1 outline-none cursor-pointer shadow-md rounded-md">
-                    <option>Small</option>
-                    <option>Medium</option>
-                    <option>Large</option>
-                  </select>
-                </div>
-              </div>
-            </section>
-
-            {/* Notifications */}
-            <section>
-              <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="size-5 md:size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5"
-                    />
-                  </svg>
-                </span>
-                &nbsp;Notifications
-              </h2>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Enable Weather Alerts</label>
-                  <input type="checkbox" className="h-4 w-4 shadow-md" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <label className="text-gray-700">Daily Summary</label>
-                  <input type="checkbox" className="h-4 w-4 shadow-md" />
-                </div>
-              </div>
-            </section>
+              </section>
+            </form>
 
             {/* Site Data */}
             <section>
@@ -312,7 +320,6 @@ const AboutUs = () => {
                       <ul className="list-disc list-inside text-gray-600 text-sm mb-4">
                         <li>Saved locations and default city</li>
                         <li>Unit and display preferences</li>
-                        <li>Theme and appearance settings</li>
                         <li>Notification settings</li>
                         <li>Cached weather data</li>
                       </ul>
@@ -357,4 +364,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default SiteSettings;
