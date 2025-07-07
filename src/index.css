@@ -192,6 +192,14 @@ body {
     z-index: 0;
 }
 
+.glass-cards.active {
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5),
+        0 10px 25px rgba(0, 0, 0, 0.4),
+        inset 0 0 10px rgba(255, 255, 255, 0.9);
+}
+
+
 
 
 

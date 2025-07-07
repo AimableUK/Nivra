@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import temp from "../../assets/temp.png";
+import React, { useEffect, useState } from "react";
 import nivraLogo from "../../assets/Nivra.png";
 import { Link } from "react-router-dom";
 import useWeatherDetailStore from "../../Store/useWeatherDetailStore";
@@ -8,7 +7,7 @@ import PrecipitationDetails from "../../Components/DailyDetails/PrecipitationDet
 import WindDetails from "../../Components/DailyDetails/WindDetails";
 import OtherDays from "../../Components/OtherDays/OtherDays";
 import useWeather from "../../Data/useWeatherData";
-import DateHeader from "../../Components/DateHeader/DateHeader";
+import WeatherDetails from "../../Components/WeatherDetails.jsx/WeatherDetails";
 
 const Home = () => {
   const [menu, setMenu] = useState(false);
@@ -21,13 +20,41 @@ const Home = () => {
     (state) => state.setFilterDetail
   );
 
-  const { location, hourly24, isLoading, error } = useWeather("kigali");
+  const { location, hourly24, current, isLoading, error } =
+    useWeather("kigali");
 
-  if (isLoading) return <p>Loading…</p>;
+  const [dailyData, setDailyData] = useState(null);
+  const [hourlyData, setHourlyData] = useState([]);
+
+  const todayDateStr = new Date().toISOString().split("T")[0];
+  const [selectedDate, setSelectedDate] = useState(todayDateStr);
+
+  useEffect(() => {
+    if (current && hourly24.length) {
+      setDailyData(current);
+      setHourlyData(hourly24);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current]);
+
+  if (isLoading || !dailyData) return <p>Loading…</p>;
   if (error) return <p>Failed to load weather.</p>;
 
-  const currentHour = new Date().getHours();
-  const dailyData = hourly24?.[currentHour];
+  const onSelectDay = (dayData) => {
+    const d = dayData.day;
+    setDailyData({
+      temp_c: d.avgtemp_c,
+      feelslike_c: d.avgtemp_c,
+      pressure_mb: d.pressure_mb ?? "—",
+      humidity: d.avghumidity,
+      precip_mm: d.totalprecip_mm,
+      wind_kph: d.maxwind_kph,
+      condition: d.condition,
+      date: dayData.date,
+    });
+    setHourlyData(dayData.hour);
+    setSelectedDate(dayData.date);
+  };
 
   // Menu
   const displayMenu = () => setMenu((prev) => !prev);
@@ -182,117 +209,7 @@ const Home = () => {
       </div>
 
       {/* weather */}
-      <div className="main flex md:flex-row justify-between gap-10 mb-3 p-4 md:px-20 lg:px-10">
-        {/* Favorites and more weather details */}
-        {/* weather condition */}
-        <div className="flex flex-col justify-between">
-          <img
-            src={`https:${dailyData.condition.icon}`}
-            alt={dailyData?.condition?.text}
-            className="size-24 sm:size-36 md:size-40"
-          />
-          <div className="flex-row items-center hidden md:flex">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="size-3 md:size-6 text-[#333]"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-              />
-            </svg>
-            <p className="text-sm md:text-lg lg:text-xl font-semibold text-start text-[#333]">
-              {location?.name + ", " + location?.country}
-            </p>
-          </div>
-        </div>
-
-        {/* Details */}
-        <div className="clima flex flex-col text-start md:text-end justify-between">
-          <div className="flex flex-col">
-            <div className="flex flex-row self-end items-center">
-              <img
-                src={temp}
-                alt="Templature"
-                className="hidden md:block size-16 md:size-16"
-              />
-              <p className="text-2xl md:text-3xl font-bold text-[#333]">
-                {dailyData?.temp_c}&#176;C
-              </p>
-            </div>
-            <div className="Clima text-end">
-              <p className="text-[12px] md:font-semibold text-[#232323] text-nowrap">
-                {dailyData?.condition.text}
-              </p>
-              <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
-                Feels like:&nbsp;
-                <span className="text-[13px] font-semibold md:font-bold">
-                  {dailyData?.feelslike_c} &#176;C
-                </span>
-              </p>
-              <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
-                Pressure:&nbsp;
-                <span className="text-[13px] font-semibold md:font-bold">
-                  {dailyData?.precip_mm} mm
-                </span>
-              </p>
-              <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
-                Humidity:&nbsp;
-                <span className="font-semibold md:font-bold">
-                  {dailyData?.humidity}%
-                </span>
-              </p>
-              <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
-                Precipition:&nbsp;
-                <span className="font-semibold md:font-bold">
-                  {dailyData?.precip_mm} mm
-                </span>
-              </p>
-              <p className="text-[13px] md:font-semibold text-[#232323] text-nowrap">
-                Wind:&nbsp;
-                <span className="font-semibold md:font-bold">
-                  {dailyData?.wind_kph} kph
-                </span>
-              </p>
-            </div>
-          </div>
-          <DateHeader />
-          <div className="flex flex-row items-center space-x-1 md:hidden text-end">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="size-4 md:size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-              />
-            </svg>
-            <p className="text-[11px] md:text-xl font-semibold text-[#232323] md:text-black whitespace-nowrap">
-              {location?.name + ", " + location?.country}
-            </p>
-          </div>
-        </div>
-      </div>
+      <WeatherDetails dailyData={dailyData} location={location} />
 
       {/* Overview */}
       <div className="main mb-3 flex flex-col py-4 px-3">
@@ -312,17 +229,17 @@ const Home = () => {
         </div>
 
         {filterDetail === "temperature" && (
-          <TemperatureDetails hourly={hourly24} />
+          <TemperatureDetails hourly={hourlyData} />
         )}
         {filterDetail === "precipitation" && (
-          <PrecipitationDetails hourly={hourly24} />
+          <PrecipitationDetails hourly={hourlyData} />
         )}
-        {filterDetail === "wind" && <WindDetails hourly={hourly24} />}
+        {filterDetail === "wind" && <WindDetails hourly={hourlyData} />}
       </div>
 
       {/* next days */}
       <div className="other mb-3 flex flex-col py-4 px-3">
-        <OtherDays />
+        <OtherDays selectedDate={selectedDate} onSelectDay={onSelectDay} />
       </div>
     </div>
   );

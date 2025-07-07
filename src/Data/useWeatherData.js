@@ -5,36 +5,35 @@ const BASE_URL = "https://api.weatherapi.com/v1/forecast.json";
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function useWeather(city = "kigali") {
-  // ask WeatherAPI for *two* forecast days
   const url = `${BASE_URL}?key=${API_KEY}&q=${city}&days=2&aqi=no&alerts=no`;
   const { data, error } = useSWR(url, fetcher);
   const isLoading = !data && !error;
 
-  // ---- slice the next 24 h, aligned with the API's local time ----
+  const location = data?.location ?? null;
+  const current = data?.current ?? null;
+
+  // ---- 24h hourly slice ----
   const hourly24 = (() => {
     if (!data) return [];
 
-    const day0 = data?.forecast.forecastday?.[0]?.hour ?? [];
-    const day1 = data?.forecast.forecastday?.[1]?.hour ?? [];
+    const day0 = data?.forecast?.forecastday?.[0]?.hour ?? [];
+    const day1 = data?.forecast?.forecastday?.[1]?.hour ?? [];
 
     if (day0.length === 0) return [];
 
-    // WeatherAPI gives you the station’s local time — use it!
-    const localtimeString = data?.location?.localtime;
-
-    const apiLocalHour = localtimeString
-      ? Number(localtimeString.split(" ")[1].split(":")[0])
+    const localtime = data?.location?.localtime;
+    const hour = localtime
+      ? Number(localtime.split(" ")[1].split(":")[0])
       : new Date().getHours();
-    // concatenate today + tomorrow, then cut out 24 items
-    const window24 = [...day0, ...day1].slice(apiLocalHour, apiLocalHour + 24);
-    return window24;
+
+    return [...day0, ...day1].slice(hour, hour + 24);
   })();
 
   return {
     isLoading,
     error,
-    location: data?.location,
-    current: data?.current,
-    hourly24, // <— ready to pass as prop
+    location,
+    current,
+    hourly24,
   };
 }
