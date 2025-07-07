@@ -9,12 +9,15 @@ import OtherDays from "../../Components/OtherDays/OtherDays";
 import useWeather from "../../Data/useWeatherData";
 import WeatherDetails from "../../Components/WeatherDetails.jsx/WeatherDetails";
 import getDailyTips from "../../utils/getDailyTips";
+import FavoritesList from "../../Components/Favorites/FavoritesList";
+import useFavoritesStore from "../../Store/useFavoritesStore";
 
 const Home = () => {
   const [menu, setMenu] = useState(false);
   const [menuItemClick, setMenuItemClick] = useState("");
   const [showTips, setShowTips] = useState(false);
   const [showFavorites, setShowFavorites] = useState(false);
+  // const [favorites, setFavorites] = useState([]);
 
   const filterDetail = useWeatherDetailStore((state) => state.filterDetail);
   const setFilterDetail = useWeatherDetailStore(
@@ -30,6 +33,10 @@ const Home = () => {
   const todayDateStr = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(todayDateStr);
 
+  const favorites = useFavoritesStore((state) => state.favorites);
+  const addFavorite = useFavoritesStore((state) => state.addFavorite);
+  const removeFavorite = useFavoritesStore((state) => state.removeFavorite);
+
   useEffect(() => {
     if (current && hourly24.length) {
       setDailyData(current);
@@ -37,6 +44,10 @@ const Home = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
+
+  // useEffect(() => {
+
+  // })
 
   if (isLoading || !dailyData) return <p>Loading…</p>;
   if (error) return <p>Failed to load weather.</p>;
@@ -90,6 +101,18 @@ const Home = () => {
   const handleFilter = (detail) => setFilterDetail(detail);
 
   const tips = getDailyTips(showTips, dailyData, location?.name);
+
+  // Handle selection
+  const handleSelectFavorite = (location) => {
+    console.log("Selected favorite:", location);
+  };
+
+  const handleAddFavorite = (FavData) => {
+    // addFavorite(location)
+    console.log(FavData)
+  };
+
+  const handleRemoveFavorite = () => {};
 
   return (
     <div className="flex flex-col py-4 px-3 md:px-14 lg:px-20 min-w-0">
@@ -209,13 +232,12 @@ const Home = () => {
             : "max-h-0 opacity-0 -mb-4 "
         }`}
       >
-        <h3 className="font-semibold text-sm">Your Favorites:</h3>
-        <p className="text-sm text-[#232323] font-medium">
-          🧥 It’s cold in Kigali today — consider wearing a warm jacket!
-        </p>
-        <p className="text-sm text-[#232323] font-medium">
-          ☔ Light rain expected. Carry an umbrella just in case.
-        </p>
+        <FavoritesList
+          onSelect={handleSelectFavorite}
+          favorites={favorites}
+          handleAddFavorite={handleAddFavorite}
+          handleRemoveFavorite={handleRemoveFavorite}
+        />
       </div>
 
       {/* weather */}
@@ -223,6 +245,9 @@ const Home = () => {
         dailyData={dailyData}
         location={location}
         selectedDate={selectedDate}
+        favorites={favorites}
+        handleAddFavorite={handleAddFavorite}
+        handleRemoveFavorite={handleRemoveFavorite}
       />
 
       {/* Overview */}

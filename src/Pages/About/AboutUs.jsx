@@ -56,7 +56,11 @@ const AboutUs = () => {
           <h2 className="text-2xl font-semibold mb-2">🌍 Data Source</h2>
           <p className="text-base mb-4">
             Weather data provided by&nbsp;
-            <span className="font-semibold text-blue-600">WeatherApi</span>
+            <span className="font-semibold text-blue-600">
+              <a href="https://www.weatherapi.com/" target="_blank">
+                WeatherApi
+              </a>
+            </span>
           </p>
 
           <div className="border-t border-white/30 my-6"></div>
@@ -72,6 +76,19 @@ const AboutUs = () => {
             >
               aimableukobizaba@gmail.com
             </a>
+          </p>
+          <div className="border-t border-white/30 my-6"></div>
+          <p className="text-base mb-4">
+            Made With
+            <span role="img" aria-label="love">
+              ❤️
+            </span>
+            by&nbsp;
+            <span className="font-semibold text-blue-600">
+              <a href="https://malos-technologies.vercel.app/" target="_blank">
+                Malos Technologies
+              </a>
+            </span>
           </p>
         </section>
       </div>

@@ -1,8 +1,13 @@
 import React from "react";
 import tempIcon from "../../assets/temp.png";
-import useSettingsStore from "../../Store/useSettingsStore"; // import your zustand store
+import useSettingsStore from "../../Store/useSettingsStore";
 
-const WeatherDetails = ({ dailyData, location, selectedDate }) => {
+const WeatherDetails = ({
+  dailyData,
+  location,
+  selectedDate,
+  handleAddFavorite
+}) => {
   const settings = useSettingsStore((state) => state.settings);
 
   let dayName = "";
@@ -51,6 +56,23 @@ const WeatherDetails = ({ dailyData, location, selectedDate }) => {
           className="size-24 sm:size-36 md:size-40"
         />
         <div className="flex-row items-center hidden md:flex">
+          <div className="items-start">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="size-5 md:size-6 text-[#2d2d2d] cursor-pointer self-start items"
+              onClick={() => handleAddFavorite(dailyData)}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+              />
+            </svg>
+          </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -75,7 +97,6 @@ const WeatherDetails = ({ dailyData, location, selectedDate }) => {
           </p>
         </div>
       </div>
-
       {/* Temperature and metrics */}
       <div className="clima flex flex-col text-start md:text-end justify-between">
         <div className="flex flex-col">
@@ -95,16 +116,16 @@ const WeatherDetails = ({ dailyData, location, selectedDate }) => {
             </p>
             {feelsLikeValue && (
               <p className="text-[13px] md:font-semibold text-[#2d2d2d]">
-                Feels like:
+                Feels like:&nbsp;
                 <strong>
-                  {feelsLikeValue} {tempSymbol}
+                  {feelsLikeValue}&#176;{tempSymbol}
                 </strong>
               </p>
             )}
 
             {pressureValue && (
               <p className="text-[13px] md:font-semibold text-[#2d2d2d]">
-                Pressure:
+                Pressure:&nbsp;
                 <strong>
                   {pressureValue} {pressureSymbol}
                 </strong>
@@ -114,13 +135,13 @@ const WeatherDetails = ({ dailyData, location, selectedDate }) => {
               Humidity: <strong>{dailyData?.humidity ?? "—"}%</strong>
             </p>
             <p className="text-[13px] md:font-semibold text-[#2d2d2d]">
-              Precipitation:
+              Precipitation:&nbsp;
               <strong>
                 {precipValue ?? "—"} {precipSymbol}
               </strong>
             </p>
             <p className="text-[13px] md:font-semibold text-[#2d2d2d]">
-              Wind:
+              Wind:&nbsp;
               <strong>
                 {windValue ?? "—"} {windSymbol}
               </strong>
@@ -129,6 +150,20 @@ const WeatherDetails = ({ dailyData, location, selectedDate }) => {
               {dayName}, {monthDay}
             </p>
             <div className="flex-row items-center md:hidden flex justify-end">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="size-5 md:size-7 text-[#2d2d2d] cursor-pointer self-start items"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+                />
+              </svg>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
