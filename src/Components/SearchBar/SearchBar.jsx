@@ -1,9 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchStore } from "../../Store/useSearchStore";
 
 const SearchBar = ({ onSelect }) => {
   const { query, suggestions, setQuery, setSuggestions } = useSearchStore();
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const containerRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (query.length < 2) {
@@ -25,20 +41,56 @@ const SearchBar = ({ onSelect }) => {
   const handleSelect = (item) => {
     setQuery(item.name);
     setShowDropdown(false);
-    if (onSelect) onSelect(item);
+    onSelect?.(item);
+  };
+
+  const handleSearchClick = () => {
+    setShowDropdown(false);
+    if (query.length >= 2) {
+      console.log("Search clicked with:", query);
+    }
   };
 
   return (
     <div className="relative">
       {/* Searh Box */}
-      <div className="relative flex items-center md:w-[160%]">
+      <div
+        ref={containerRef}
+        className="relative flex items-center md:w-[160%]"
+      >
+        {query.length > 0 && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="size-6 absolute z-10 left-1 cursor-pointer text-[#222222]"
+            onClick={() => setQuery("")}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        )}
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => setShowDropdown(true)}
+          onFocus={() => query.length >= 2 && setShowDropdown(true)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              setShowDropdown(false);
+              onSelect?.({
+                id: query.toLowerCase().replace(/\s+/g, "-"),
+                name: query,
+              });
+            }
+          }}
           placeholder="Search for a location..."
-          className="group search active glass-card w-full rounded-2xl focus:rounded-b-none px-5 py-1 outline-none pr-10 border-2 shadow-2xl"
+          className="search active glass-card w-full rounded-2xl focus:rounded-b-none px-5 py-1 outline-none pl-7 pr-15 border-2 shadow-2xl placeholder:text-[#444]"
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +98,8 @@ const SearchBar = ({ onSelect }) => {
           viewBox="0 0 24 24"
           strokeWidth={2}
           stroke="currentColor"
-          className="size-6 absolute right-2 cursor-pointer group-focus:rounded-b-none"
+          className="size-6 absolute right-2 cursor-pointer text-[#222222]"
+          onClick={handleSearchClick}
         >
           <path
             strokeLinecap="round"
@@ -63,7 +116,9 @@ const SearchBar = ({ onSelect }) => {
             <li
               key={item.id}
               className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex flex-row items-center"
-              onClick={() => handleSelect(item)}
+              onClick={() => {
+                handleSelect(item);
+              }}
             >
               <span>
                 <svg
@@ -72,7 +127,7 @@ const SearchBar = ({ onSelect }) => {
                   viewBox="0 0 24 24"
                   strokeWidth={2}
                   stroke="currentColor"
-                  className="size-5 text-[#333]"
+                  className="size-5 text-[#222222]"
                 >
                   <path
                     strokeLinecap="round"
