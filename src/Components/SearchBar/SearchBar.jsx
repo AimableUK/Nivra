@@ -78,7 +78,7 @@ const SearchBar = ({ onSelect }) => {
           onKeyDown={handleKeyDown}
           placeholder="Search for a location..."
           onFocus={() => query.length >= 2 && showDropdown}
-          className="search glass-card w-full rounded-2xl focus:rounded-b-none px-5 py-1 outline-none pl-7 pr-15 border-2 shadow-2xl placeholder:text-[#444]"
+          className="search glass-card w-full rounded-2xl focus:rounded-b-none px-5 py-1 outline-none pl-7 pr-15 border-2 shadow-2xl placeholder:text-[#333]"
         />
 
         <svg

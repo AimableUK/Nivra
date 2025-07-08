@@ -26,9 +26,10 @@ const Home = () => {
   );
 
   const settings = useSettingsStore((s) => s.settings);
-  const defaultLocation = settings.defaultCity;
+  const defaultLocation = settings.defaultCity || "kigali";
 
   const [searchLocation, setSearchLocation] = useState(defaultLocation);
+
   const { location, hourly24, current, isLoading, error } =
     useWeather(searchLocation);
 
