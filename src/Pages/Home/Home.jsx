@@ -19,7 +19,6 @@ const Home = () => {
   const [menuItemClick, setMenuItemClick] = useState("");
   const [showTips, setShowTips] = useState(false);
   const [showFavorites, setShowFavorites] = useState(false);
-  // const [favorites, setFavorites] = useState([]);
 
   const filterDetail = useWeatherDetailStore((state) => state.filterDetail);
   const setFilterDetail = useWeatherDetailStore(
@@ -109,21 +108,14 @@ const Home = () => {
   const tips = getDailyTips(showTips, dailyData, location?.name);
 
   // Handle selection
-  const handleSelectFavorite = (location) => {
+  const handleSelectFavorite = (location) =>
     console.log("Selected favorite:", location);
-  };
 
-  const handleAddFavorite = (FavData) => {
-    // addFavorite(location)
-    console.log(FavData);
-  };
+  const handleAddFavorite = (FavData) => console.log(FavData);
 
   const handleRemoveFavorite = () => {};
 
-  const handleSelect = (location) => {
-    setSearchLocation(location.name);
-    console.log("User selected:", location);
-  };
+  const handleSelect = (location) => setSearchLocation(location.name);
 
   return (
     <div className="relative flex flex-col py-4 px-3 md:px-14 lg:px-20 min-w-0">

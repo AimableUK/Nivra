@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const defaultSettings = {
-  defaultCity: null,
+  defaultCity: "kigali",
   myLocation: false,
 
   temp_Unit: "c",
