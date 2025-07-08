@@ -11,6 +11,7 @@ import WeatherDetails from "../../Components/WeatherDetails.jsx/WeatherDetails";
 import getDailyTips from "../../utils/getDailyTips";
 import FavoritesList from "../../Components/Favorites/FavoritesList";
 import useFavoritesStore from "../../Store/useFavoritesStore";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 const Home = () => {
   const [menu, setMenu] = useState(false);
@@ -109,38 +110,25 @@ const Home = () => {
 
   const handleAddFavorite = (FavData) => {
     // addFavorite(location)
-    console.log(FavData)
+    console.log(FavData);
   };
 
   const handleRemoveFavorite = () => {};
 
+  const handleSelect = (location) => {
+    console.log("User selected:", location);
+    // Navigate or load weather info here
+  };
+
   return (
-    <div className="flex flex-col py-4 px-3 md:px-14 lg:px-20 min-w-0">
+    <div className="relative flex flex-col py-4 px-3 md:px-14 lg:px-20 min-w-0">
       {/* Top NavBar */}
       <div className="flex flex-row items-center justify-between gap-2 w-full mb-1">
-        <div className="relative flex items-center w-full md:w-[50%]">
+        <div className="relative flex items-center w-full">
           <Link to="/">
             <img src={nivraLogo} alt="" className="size-10" />
           </Link>
-          <input
-            type="text"
-            placeholder="Location Search"
-            className="search glass-card w-full rounded-2xl px-5 py-1 outline-none pr-10 border-2 focus:border-[#4ade80] shadow-2xl"
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="size-6 absolute right-2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-            />
-          </svg>
+          <SearchBar onSelect={handleSelect} />
         </div>
 
         <div className="mr-1 md:mr-2">
