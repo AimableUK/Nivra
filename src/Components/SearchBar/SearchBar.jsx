@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSearchStore } from "../../Store/useSearchStore";
+import useSearchSuggestions from "../../api/useSearchSuggestions";
 
 const SearchBar = ({ onSelect }) => {
   const { query, suggestions, setQuery, setSuggestions } = useSearchStore();
   const [showDropdown, setShowDropdown] = useState(false);
-
+  const [manualSearch, setManualSearch] = useState("");
   const containerRef = useRef();
+
+  const { suggests, isLoading, error } = useSearchSuggestions(manualSearch);
+
+  useEffect(() => {
+    if (!manualSearch || suggests.length === 0) return;
+    setSuggestions(suggests.slice(0, 7));
+    setShowDropdown(true);
+  }, [manualSearch, suggests, setSuggestions]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -16,27 +25,21 @@ const SearchBar = ({ onSelect }) => {
         setShowDropdown(false);
       }
     };
-
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    if (query.length < 2) {
-      setSuggestions([]);
-      return;
+  const handleTriggerSearch = () => {
+    if (query.length >= 2) {
+      setManualSearch(query);
     }
+  };
 
-    const mockSuggestions = [
-      { id: "kigali-rw", name: "Kigali, Rwanda" },
-      { id: "nairobi-ke", name: "Nairobi, Kenya" },
-      { id: "addis-et", name: "Addis Ababa, Ethiopia" },
-      { id: "kampala-ug", name: "Kampala, Uganda" },
-    ].filter((loc) => loc.name.toLowerCase().includes(query.toLowerCase()));
-
-    setSuggestions(mockSuggestions);
-    setShowDropdown(true);
-  }, [query, setSuggestions]);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleTriggerSearch();
+    }
+  };
 
   const handleSelect = (item) => {
     setQuery(item.name);
@@ -44,16 +47,8 @@ const SearchBar = ({ onSelect }) => {
     onSelect?.(item);
   };
 
-  const handleSearchClick = () => {
-    setShowDropdown(false);
-    if (query.length >= 2) {
-      console.log("Search clicked with:", query);
-    }
-  };
-
   return (
     <div className="relative">
-      {/* Searh Box */}
       <div
         ref={containerRef}
         className="relative flex items-center md:w-[160%]"
@@ -65,7 +60,7 @@ const SearchBar = ({ onSelect }) => {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="size-6 absolute z-10 left-1 cursor-pointer text-[#222222]"
+            className="size-5 md:size-6 absolute z-10 left-1 cursor-pointer text-[#222222]"
             onClick={() => setQuery("")}
           >
             <path
@@ -75,52 +70,39 @@ const SearchBar = ({ onSelect }) => {
             />
           </svg>
         )}
+
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => query.length >= 2 && setShowDropdown(true)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              setShowDropdown(false);
-              onSelect?.({
-                id: query.toLowerCase().replace(/\s+/g, "-"),
-                name: query,
-              });
-            }
-          }}
+          onKeyDown={handleKeyDown}
           placeholder="Search for a location..."
-          className="search active glass-card w-full rounded-2xl focus:rounded-b-none px-5 py-1 outline-none pl-7 pr-15 border-2 shadow-2xl placeholder:text-[#444]"
+          onFocus={() => query.length >= 2 && showDropdown}
+          className="search glass-card w-full rounded-2xl focus:rounded-b-none px-5 py-1 outline-none pl-7 pr-15 border-2 shadow-2xl"
         />
+
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
+          onClick={handleTriggerSearch}
+          className="size-5 absolute right-2 cursor-pointer text-[#222]"
           viewBox="0 0 24 24"
+          fill="none"
           strokeWidth={2}
           stroke="currentColor"
-          className="size-6 absolute right-2 cursor-pointer text-[#222222]"
-          onClick={handleSearchClick}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-          />
+          <path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
         </svg>
       </div>
 
-      {/* Search Body */}
+      {/* Suggestions Dropdown */}
       {showDropdown && suggestions.length > 0 && (
-        <ul className="absolute z-50 w-[160%] border search rounded-b-md shadow-lg max-h-60 overflow-y-auto">
+        <ul className="absolute z-50 w-full md:w-[160%] border search rounded-b-md shadow-lg max-h-60 overflow-y-auto">
           {suggestions.map((item) => (
             <li
               key={item.id}
-              className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex flex-row items-center"
-              onClick={() => {
-                handleSelect(item);
-              }}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer flex items-center"
+              onClick={() => handleSelect(item)}
             >
-              <span>
+              <span className="mr-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

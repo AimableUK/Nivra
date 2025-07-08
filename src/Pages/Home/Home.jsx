@@ -6,12 +6,13 @@ import TemperatureDetails from "../../Components/DailyDetails/TemperatureDetails
 import PrecipitationDetails from "../../Components/DailyDetails/PrecipitationDetails";
 import WindDetails from "../../Components/DailyDetails/WindDetails";
 import OtherDays from "../../Components/OtherDays/OtherDays";
-import useWeather from "../../Data/useWeatherData";
+import useWeather from "../../api/useWeatherData";
 import WeatherDetails from "../../Components/WeatherDetails.jsx/WeatherDetails";
 import getDailyTips from "../../utils/getDailyTips";
 import FavoritesList from "../../Components/Favorites/FavoritesList";
 import useFavoritesStore from "../../Store/useFavoritesStore";
 import SearchBar from "../../Components/SearchBar/SearchBar";
+import useSettingsStore from "../../Store/useSettingsStore";
 
 const Home = () => {
   const [menu, setMenu] = useState(false);
@@ -25,8 +26,12 @@ const Home = () => {
     (state) => state.setFilterDetail
   );
 
+  const settings = useSettingsStore((s) => s.settings);
+  const defaultLocation = settings.defaultCity;
+
+  const [searchLocation, setSearchLocation] = useState(defaultLocation);
   const { location, hourly24, current, isLoading, error } =
-    useWeather("kigali");
+    useWeather(searchLocation);
 
   const [dailyData, setDailyData] = useState(null);
   const [hourlyData, setHourlyData] = useState([]);
@@ -46,9 +51,9 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
 
-  // useEffect(() => {
-
-  // })
+  useEffect(() => {
+    document.title = `${searchLocation} ForeCast - Nivra`;
+  });
 
   if (isLoading || !dailyData) return <p>Loading…</p>;
   if (error) return <p>Failed to load weather.</p>;
@@ -116,8 +121,8 @@ const Home = () => {
   const handleRemoveFavorite = () => {};
 
   const handleSelect = (location) => {
+    setSearchLocation(location.name);
     console.log("User selected:", location);
-    // Navigate or load weather info here
   };
 
   return (
@@ -266,7 +271,11 @@ const Home = () => {
 
       {/* next days */}
       <div className="other mb-3 flex flex-col py-4 px-3">
-        <OtherDays selectedDate={selectedDate} onSelectDay={onSelectDay} />
+        <OtherDays
+          selectedDate={selectedDate}
+          onSelectDay={onSelectDay}
+          searchlocation={searchLocation}
+        />
       </div>
     </div>
   );

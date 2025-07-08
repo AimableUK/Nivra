@@ -1,9 +1,9 @@
 import React from "react";
-import useDaysWeather from "../../Data/useDaysWeatherData";
+import useDaysWeather from "../../api/useDaysWeatherData";
 import useSettingsStore from "../../Store/useSettingsStore";
 
-const OtherDays = ({ onSelectDay, selectedDate }) => {
-  const { isLoading, error, forecastdays } = useDaysWeather("Kigali");
+const OtherDays = ({ onSelectDay, selectedDate, searchlocation }) => {
+  const { isLoading, error, forecastdays } = useDaysWeather(searchlocation);
   const tempUnit = useSettingsStore((state) => state.settings.temp_Unit);
 
   if (isLoading) return <p>Loading…</p>;
