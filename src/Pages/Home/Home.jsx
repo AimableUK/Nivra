@@ -27,7 +27,6 @@ const Home = () => {
 
   const [searchLocation, setSearchLocation] = useState(defaultLocation);
 
-  // ✅ Watch for changes in defaultCity and update searchLocation
   useEffect(() => {
     setSearchLocation(settings.defaultCity || "kigali");
   }, [settings.defaultCity]);
@@ -40,7 +39,6 @@ const Home = () => {
 
   const todayDateStr = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(todayDateStr);
-
 
   useEffect(() => {
     if (current && hourly24.length) {
@@ -204,10 +202,7 @@ const Home = () => {
       </div>
 
       {/* weather */}
-      <WeatherDetails
-        dailyData={dailyData}
-        location={location}
-      />
+      <WeatherDetails dailyData={dailyData} location={location} />
 
       {/* Overview */}
       <div className="main mb-3 flex flex-col py-4 px-3">
