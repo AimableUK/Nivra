@@ -16,6 +16,11 @@ body {
     background-size: cover;
 }
 
+img {
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
 
 /* ------- HOME ------- */
 
