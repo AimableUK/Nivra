@@ -233,7 +233,7 @@ const SiteSettings = () => {
                           strokeWidth={3}
                           stroke="currentColor"
                           className="group size-5 md:size-6 text-gray-800 cursor-pointer"
-                          onClick={() => setShowAddress(prev => !prev)}
+                          onClick={() => setShowAddress((prev) => !prev)}
                         >
                           <path
                             strokeLinecap="round"
@@ -242,7 +242,7 @@ const SiteSettings = () => {
                           />
                         </svg>
                         <p className="hidden group-hover:flex flex-row whitespace-nowrap absolute z-10 bg-slate-300 top-7 left-2 rounded-md px-2">
-                          View Address
+                          {showAddress ? "Hide Address" : "View Address"}
                         </p>
                       </span>
                       Use My Location
@@ -259,10 +259,7 @@ const SiteSettings = () => {
 
                   {/* Current Location */}
                   {showAddress && (
-                    <div className={`flex flex-col gap-1 bg-slate-400 p-2 rounded-md pl-3 overflow-hidden transform animate-slide-down transition-all duration-300 ease-in-out
-                    ${showAddress ? "translate-y-0 opacity-100 mt-2" : "-translate-y-11 opacity-0 mt-0"}
-                    `}
-                    >
+                    <div className="flex flex-col gap-1 bg-slate-400 p-2 rounded-md pl-3 overflow-hidden transform animate-slide-down transition-all duration-300 ease-in-out">
                       <p className="font-semibold">Current Address:</p>
 
                       {settings.address?.city && (
