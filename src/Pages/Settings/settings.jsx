@@ -260,68 +260,71 @@ const SiteSettings = () => {
                   {/* Current Location */}
                   {showAddress && (
                     <div className="flex flex-col gap-1 bg-slate-400 p-2 rounded-md pl-3 overflow-hidden transform animate-slide-down transition-all duration-300 ease-in-out">
-                      <p className="font-semibold">Current Address:</p>
+                      {settings.address ? (
+                        <>
+                          <p className="font-semibold">Current Address:</p>
 
-                      {settings.address?.city && (
+                          {settings.address.city && (
+                            <p>
+                              City:&nbsp;
+                              <span className="text-gray-800">
+                                {settings.address.city}
+                              </span>
+                            </p>
+                          )}
+                          {settings.address.town && (
+                            <p>
+                              Town:&nbsp;
+                              <span className="text-gray-800">
+                                {settings.address.town}
+                              </span>
+                            </p>
+                          )}
+                          {settings.address.village && (
+                            <p>
+                              Village:&nbsp;
+                              <span className="text-gray-800">
+                                {settings.address.village}
+                              </span>
+                            </p>
+                          )}
+                          {settings.address.county && (
+                            <p>
+                              District/County:&nbsp;
+                              <span className="text-gray-800">
+                                {settings.address.county}
+                              </span>
+                            </p>
+                          )}
+                          {settings.address.state_district && (
+                            <p>
+                              State District:&nbsp;
+                              <span className="text-gray-800">
+                                {settings.address.state_district}
+                              </span>
+                            </p>
+                          )}
+                          {settings.address.state && (
+                            <p>
+                              State:&nbsp;
+                              <span className="text-gray-800">
+                                {settings.address.state}
+                              </span>
+                            </p>
+                          )}
+                          {settings.address.country && (
+                            <p>
+                              Country:&nbsp;
+                              <span className="text-gray-800">
+                                {settings.address.country}
+                              </span>
+                            </p>
+                          )}
+                        </>
+                      ) : (
                         <p>
-                          City:&nbsp;
-                          <span className="text-gray-800">
-                            {settings.address.city}
-                          </span>
-                        </p>
-                      )}
-
-                      {settings.address?.town && (
-                        <p>
-                          Town:&nbsp;
-                          <span className="text-gray-800">
-                            {settings.address.town}
-                          </span>
-                        </p>
-                      )}
-
-                      {settings.address?.village && (
-                        <p>
-                          Village:&nbsp;
-                          <span className="text-gray-800">
-                            {settings.address.village}
-                          </span>
-                        </p>
-                      )}
-
-                      {settings.address?.county && (
-                        <p>
-                          District/County:&nbsp;
-                          <span className="text-gray-800">
-                            {settings.address.county}
-                          </span>
-                        </p>
-                      )}
-
-                      {settings.address?.state_district && (
-                        <p>
-                          State District:&nbsp;
-                          <span className="text-gray-800">
-                            {settings.address.state_district}
-                          </span>
-                        </p>
-                      )}
-
-                      {settings.address?.state && (
-                        <p>
-                          State:&nbsp;
-                          <span className="text-gray-800">
-                            {settings.address.state}
-                          </span>
-                        </p>
-                      )}
-
-                      {settings.address?.country && (
-                        <p>
-                          Country:&nbsp;
-                          <span className="text-gray-800">
-                            {settings.address.country}
-                          </span>
+                          ⚠️ To use this feature, you must allow location access
+                          first.
                         </p>
                       )}
                     </div>
