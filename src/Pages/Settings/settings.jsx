@@ -123,6 +123,29 @@ const SiteSettings = () => {
     }
   };
 
+  const handleWeatherAlerts = (e) => {
+    const checked = e.target.checked;
+
+    if (checked) {
+      Notification.requestPermission().then((perm) => {
+        if (perm === "granted") {
+          new Notification("Nivra Forecast", {
+            body: "☀️ Today will be mostly sunny in Kigali, high of 26°C.",
+            icon: "/pwa-192x192.png",
+          });
+        }
+      });
+    }
+  };
+
+  setTimeout(() => {
+    if (Notification.permission === "granted") {
+      new Notification("Daily Forecast", {
+        body: "⛅ Mild weather today in Kigali. 23°C, slight breeze.",
+      });
+    }
+  }, 5000); // simulate a delay for testing
+
   return (
     <div className="relative min-h-screen pb-2">
       {/* Setting Update  */}
@@ -473,6 +496,7 @@ const SiteSettings = () => {
                       checked={formData.weather_Alerts}
                       onChange={handleChange}
                       className="h-4 w-4 shadow-md"
+                      onClick={handleWeatherAlerts}
                     />
                   </div>
                 </div>
