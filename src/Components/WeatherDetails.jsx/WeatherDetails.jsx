@@ -5,8 +5,6 @@ import useSettingsStore from "../../Store/useSettingsStore";
 const WeatherDetails = ({
   dailyData,
   location,
-  selectedDate,
-  handleAddFavorite
 }) => {
   const settings = useSettingsStore((state) => state.settings);
 
@@ -56,23 +54,7 @@ const WeatherDetails = ({
           className="size-24 sm:size-36 md:size-40"
         />
         <div className="flex-row items-center hidden md:flex">
-          <div className="items-start">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="size-5 md:size-6 text-[#2d2d2d] cursor-pointer self-start items"
-              onClick={() => handleAddFavorite(dailyData)}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-              />
-            </svg>
-          </div>
+          <div className="items-start"></div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -150,20 +132,6 @@ const WeatherDetails = ({
               {dayName}, {monthDay}
             </p>
             <div className="flex-row items-center md:hidden flex justify-end">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="size-5 md:size-7 text-[#2d2d2d] cursor-pointer self-start items"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-                />
-              </svg>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

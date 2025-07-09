@@ -9,8 +9,6 @@ import OtherDays from "../../Components/OtherDays/OtherDays";
 import useWeather from "../../api/useWeatherData";
 import WeatherDetails from "../../Components/WeatherDetails.jsx/WeatherDetails";
 import getDailyTips from "../../utils/getDailyTips";
-import FavoritesList from "../../Components/Favorites/FavoritesList";
-import useFavoritesStore from "../../Store/useFavoritesStore";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import useSettingsStore from "../../Store/useSettingsStore";
 
@@ -18,7 +16,6 @@ const Home = () => {
   const [menu, setMenu] = useState(false);
   const [menuItemClick, setMenuItemClick] = useState("");
   const [showTips, setShowTips] = useState(false);
-  const [showFavorites, setShowFavorites] = useState(false);
 
   const filterDetail = useWeatherDetailStore((state) => state.filterDetail);
   const setFilterDetail = useWeatherDetailStore(
@@ -44,9 +41,6 @@ const Home = () => {
   const todayDateStr = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(todayDateStr);
 
-  const favorites = useFavoritesStore((state) => state.favorites);
-  const addFavorite = useFavoritesStore((state) => state.addFavorite);
-  const removeFavorite = useFavoritesStore((state) => state.removeFavorite);
 
   useEffect(() => {
     if (current && hourly24.length) {
@@ -107,9 +101,6 @@ const Home = () => {
     if (item === "tips") {
       setMenuItemClick("tips");
       setShowTips((prev) => !prev);
-    } else if (item === "favorites") {
-      setMenuItemClick("favorites");
-      setShowFavorites((prev) => !prev);
     } else if (item === "about") {
       setMenuItemClick("about");
       setMenu("false");
@@ -125,14 +116,6 @@ const Home = () => {
   const handleFilter = (detail) => setFilterDetail(detail);
 
   const tips = getDailyTips(showTips, dailyData, location?.name);
-
-  // Handle selection
-  const handleSelectFavorite = (location) =>
-    console.log("Selected favorite:", location);
-
-  const handleAddFavorite = (FavData) => console.log(FavData);
-
-  const handleRemoveFavorite = () => {};
 
   const handleSelect = (location) => setSearchLocation(location.name);
 
@@ -181,14 +164,6 @@ const Home = () => {
           >
             Daily Tips
           </p>
-          <p
-            className={`text-sm md:text-[17px] font-semibold ${
-              menuItemClick === "favorites" && "menuItem"
-            } px-2 cursor-pointer transition-all duration-100 ease-in-out rounded-xl text-[#232323]`}
-            onClick={() => menuItemfilter("favorites")}
-          >
-            Favorites
-          </p>
           <Link to="/aboutus">
             <p
               className={`text-sm md:text-[17px] font-semibold ${
@@ -228,30 +203,10 @@ const Home = () => {
         ))}
       </div>
 
-      {/* Favorites */}
-      <div
-        className={`menu overflow-hidden transition-all duration-300 p-2 px-4 ease-in-out ${
-          showFavorites
-            ? "max-h-40 opacity-100 mb-3 -mt-1"
-            : "max-h-0 opacity-0 -mb-4 "
-        }`}
-      >
-        <FavoritesList
-          onSelect={handleSelectFavorite}
-          favorites={favorites}
-          handleAddFavorite={handleAddFavorite}
-          handleRemoveFavorite={handleRemoveFavorite}
-        />
-      </div>
-
       {/* weather */}
       <WeatherDetails
         dailyData={dailyData}
         location={location}
-        selectedDate={selectedDate}
-        favorites={favorites}
-        handleAddFavorite={handleAddFavorite}
-        handleRemoveFavorite={handleRemoveFavorite}
       />
 
       {/* Overview */}
