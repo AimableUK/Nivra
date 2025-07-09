@@ -123,28 +123,28 @@ const SiteSettings = () => {
     }
   };
 
-  const handleWeatherAlerts = (e) => {
-    const checked = e.target.checked;
+  // const handleWeatherAlerts = (e) => {
+  //   const checked = e.target.checked;
 
-    if (checked) {
-      Notification.requestPermission().then((perm) => {
-        if (perm === "granted") {
-          new Notification("Nivra Forecast", {
-            body: "☀️ Today will be mostly sunny in Kigali, high of 26°C.",
-            icon: "/pwa-192x192.png",
-          });
-        }
-      });
-    }
-  };
+  //   if (checked) {
+  //     Notification.requestPermission().then((perm) => {
+  //       if (perm === "granted") {
+  //         new Notification("Nivra Forecast", {
+  //           body: "☀️ Today will be mostly sunny in Kigali, high of 26°C.",
+  //           icon: "/pwa-192x192.png",
+  //         });
+  //       }
+  //     });
+  //   }
+  // };
 
-  setTimeout(() => {
-    if (Notification.permission === "granted") {
-      new Notification("Daily Forecast", {
-        body: "⛅ Mild weather today in Kigali. 23°C, slight breeze.",
-      });
-    }
-  }, 5000); // simulate a delay for testing
+  // setTimeout(() => {
+  //   if (Notification.permission === "granted") {
+  //     new Notification("Daily Forecast", {
+  //       body: "⛅ Mild weather today in Kigali. 23°C, slight breeze.",
+  //     });
+  //   }
+  // }, 5000);
 
   return (
     <div className="relative min-h-screen pb-2">
@@ -466,7 +466,7 @@ const SiteSettings = () => {
 
               {/* Notifications */}
               <section className="mb-3">
-                <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
+                <p className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -484,7 +484,8 @@ const SiteSettings = () => {
                     </svg>
                   </span>
                   &nbsp;Notifications
-                </h2>
+                </p>
+
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="text-gray-700">
@@ -496,9 +497,20 @@ const SiteSettings = () => {
                       checked={formData.weather_Alerts}
                       onChange={handleChange}
                       className="h-4 w-4 shadow-md"
-                      onClick={handleWeatherAlerts}
+                      // onClick={handleWeatherAlerts}
                     />
                   </div>
+                </div>
+                <div className="border-l-4 border-l-yellow-900 p-4 rounded-md mt-4 text-sm">
+                  <h4 className="font-bold mb-1">Disclaimer:</h4>
+                  <p>
+                    Push notification support is currently under development.
+                    While we've enabled basic functionality, you may not receive
+                    daily weather alerts on all devices or browsers yet. We're
+                    actively working to improve this feature and ensure
+                    reliable, timely updates across all platforms. Thank you for
+                    your patience!
+                  </p>
                 </div>
               </section>
             </form>
