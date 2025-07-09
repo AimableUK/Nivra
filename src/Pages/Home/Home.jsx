@@ -30,6 +30,11 @@ const Home = () => {
 
   const [searchLocation, setSearchLocation] = useState(defaultLocation);
 
+  // ✅ Watch for changes in defaultCity and update searchLocation
+  useEffect(() => {
+    setSearchLocation(settings.defaultCity || "kigali");
+  }, [settings.defaultCity]);
+
   const { location, hourly24, current, isLoading, error } =
     useWeather(searchLocation);
 

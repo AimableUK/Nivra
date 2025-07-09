@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 const defaultSettings = {
   defaultCity: null,
   myLocation: false,
-
+  address: null,
   temp_Unit: "c",
   pres_Unit: "mb",
   wind_Unit: "kph",
@@ -27,6 +27,7 @@ const useSettingsStore = create(
         set(() => ({
           settings: { ...defaultSettings },
         })),
+
     }),
     {
       name: "nivra-settings",

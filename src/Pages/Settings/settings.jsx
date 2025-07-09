@@ -10,9 +10,12 @@ const SiteSettings = () => {
   const [dataUpdateDisplay, setDataUpdateDisplay] = useState(false);
   const [updateMessage, setUpdateMessage] = useState("");
 
+  const [showAddress, setShowAddress] = useState(false);
+
   const settings = useSettingsStore((s) => s.settings);
   const updateSettings = useSettingsStore((s) => s.updateSettings);
   const resetSiteData = useSettingsStore((s) => s.resetSiteData);
+  const clearWeatherData = useSettingsStore((s) => s.clearWeatherData);
 
   const [formData, setFormData] = useState(settings);
 
@@ -64,6 +67,59 @@ const SiteSettings = () => {
   //   Closing delete dialog
   const onCancel = () => {
     setResetSiteDataDialogOpen(false);
+  };
+
+  const handleMyLocation = (e) => {
+    const checked = e.target.checked;
+
+    if (checked) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+
+          fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+              const address = data.address;
+
+              const city =
+                address.city ||
+                address.town ||
+                address.village ||
+                address.county ||
+                address.state_district ||
+                address.state;
+
+              const country = address.country || "";
+
+              if (city && country) {
+                const locationName = `${city}, ${country}`;
+
+                updateSettings({
+                  defaultCity: locationName,
+                  myLocation: true,
+                  address: address,
+                });
+              } else {
+                alert(
+                  "We couldn't detect your city. Please try again or search manually."
+                );
+              }
+            })
+            .catch(() => {
+              console.log("Error getting your Current Location");
+            });
+        },
+        () => alert("Please allow location access.")
+      );
+    } else {
+      updateSettings({
+        myLocation: false,
+        defaultCity: "kigali",
+      });
+      clearWeatherData();
+    }
   };
 
   return (
@@ -168,15 +224,111 @@ const SiteSettings = () => {
                     />
                   </div>
                   <div className="flex items-center justify-between">
-                    <label className="text-gray-700">Use My Location</label>
+                    <label className="text-gray-700 flex">
+                      <span className="group relative">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={3}
+                          stroke="currentColor"
+                          className="group size-5 md:size-6 text-gray-800 cursor-pointer"
+                          onClick={() => setShowAddress(prev => !prev)}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                          />
+                        </svg>
+                        <p className="hidden group-hover:flex flex-row whitespace-nowrap absolute z-10 bg-slate-300 top-7 left-2 rounded-md px-2">
+                          View Address
+                        </p>
+                      </span>
+                      Use My Location
+                    </label>
                     <input
                       type="checkbox"
                       name="myLocation"
                       checked={formData.myLocation}
                       onChange={handleChange}
                       className="h-4 w-4 shadow-md"
+                      onClick={handleMyLocation}
                     />
                   </div>
+
+                  {/* Current Location */}
+                  {showAddress && (
+                    <div className={`flex flex-col gap-1 bg-slate-400 p-2 rounded-md pl-3 overflow-hidden transform animate-slide-down transition-all duration-300 ease-in-out
+                    ${showAddress ? "translate-y-0 opacity-100 mt-2" : "-translate-y-11 opacity-0 mt-0"}
+                    `}
+                    >
+                      <p className="font-semibold">Current Address:</p>
+
+                      {settings.address?.city && (
+                        <p>
+                          City:&nbsp;
+                          <span className="text-gray-800">
+                            {settings.address.city}
+                          </span>
+                        </p>
+                      )}
+
+                      {settings.address?.town && (
+                        <p>
+                          Town:&nbsp;
+                          <span className="text-gray-800">
+                            {settings.address.town}
+                          </span>
+                        </p>
+                      )}
+
+                      {settings.address?.village && (
+                        <p>
+                          Village:&nbsp;
+                          <span className="text-gray-800">
+                            {settings.address.village}
+                          </span>
+                        </p>
+                      )}
+
+                      {settings.address?.county && (
+                        <p>
+                          District/County:&nbsp;
+                          <span className="text-gray-800">
+                            {settings.address.county}
+                          </span>
+                        </p>
+                      )}
+
+                      {settings.address?.state_district && (
+                        <p>
+                          State District:&nbsp;
+                          <span className="text-gray-800">
+                            {settings.address.state_district}
+                          </span>
+                        </p>
+                      )}
+
+                      {settings.address?.state && (
+                        <p>
+                          State:&nbsp;
+                          <span className="text-gray-800">
+                            {settings.address.state}
+                          </span>
+                        </p>
+                      )}
+
+                      {settings.address?.country && (
+                        <p>
+                          Country:&nbsp;
+                          <span className="text-gray-800">
+                            {settings.address.country}
+                          </span>
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </section>
 
