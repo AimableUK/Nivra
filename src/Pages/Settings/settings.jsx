@@ -36,7 +36,7 @@ const SiteSettings = () => {
     });
     setTimeout(() => {
       setDataUpdateDisplay(true);
-      setUpdateMessage("Data Updated Successfully");
+      setUpdateMessage("Settings Updated Successfully");
     }, 500);
 
     setTimeout(() => {
@@ -127,7 +127,7 @@ const SiteSettings = () => {
     <div className="relative min-h-screen pb-2">
       {/* Setting Update  */}
       <section
-        className={`z-50 fixed bg-[#33a7ce] p-2 px-3 rounded-md right-4 top-4 text-white font-semibold shadow-lg
+        className={`z-50 fixed bg-[#33a7ce] p-2 px-4 rounded-md right-4 top-4 text-white font-semibold shadow-lg
           transition-all duration-300 ease-in-out
           ${
             dataUpdateDisplay
@@ -136,7 +136,7 @@ const SiteSettings = () => {
           }
         `}
       >
-        <p className="text-sm md:text-xl">{updateMessage}</p>
+        <p className="text-sm">{updateMessage}</p>
       </section>
 
       <div className="m-2 md:m-4 md:mx-10">
