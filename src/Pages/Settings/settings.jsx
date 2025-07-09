@@ -11,6 +11,7 @@ const SiteSettings = () => {
   const [updateMessage, setUpdateMessage] = useState("");
 
   const [showAddress, setShowAddress] = useState(false);
+  const [viewPrecaution, setViewPrecaution] = useState(false);
 
   const settings = useSettingsStore((s) => s.settings);
   const updateSettings = useSettingsStore((s) => s.updateSettings);
@@ -262,7 +263,42 @@ const SiteSettings = () => {
                     <div className="flex flex-col gap-1 bg-slate-400 p-2 rounded-md pl-3 overflow-hidden transform animate-slide-down transition-all duration-300 ease-in-out">
                       {settings.address ? (
                         <>
-                          <p className="font-semibold">Current Address:</p>
+                          <p className="font-semibold flex">
+                            Current Address:
+                            <span className="group relative">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={2}
+                                stroke="currentColor"
+                                className="size-6 cursor-pointer"
+                                onClick={() =>
+                                  setViewPrecaution((prev) => !prev)
+                                }
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                                />
+                              </svg>
+                              <p className="hidden group-hover:flex flex-row whitespace-nowrap absolute z-10 bg-slate-300 top-7 left-2 rounded-md px-2">
+                                {viewPrecaution ? "Hide Info" : "View Info"}
+                              </p>
+                            </span>
+                          </p>
+
+                          {/* Precaution */}
+                          {viewPrecaution && (
+                            <div className="animate-slide-down">
+                              <p className="mt-1 italic text-yellow-700">
+                                Please verify if this location is still
+                                accurate. If not, re-enable location access or
+                                search for your city manually.
+                              </p>
+                            </div>
+                          )}
 
                           {settings.address.city && (
                             <p>
