@@ -344,7 +344,7 @@ body {
     left: 50%;
     top: 50%;
     box-sizing: border-box;
-    border: 7px solid #FF3D00;
+    border: 7px solid #0768aa;
     border-radius:50%;
     animation: rotate 0.5s linear infinite;
   }
