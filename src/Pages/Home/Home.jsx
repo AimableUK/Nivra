@@ -55,8 +55,21 @@ const Home = () => {
     document.title = `${searchLocation} ForeCast - Nivra`;
   });
 
-  if (isLoading || !dailyData) return <p>Loading…</p>;
-  if (error) return <p>Failed to load weather.</p>;
+  if (isLoading || !dailyData)
+    return (
+      <div className="absolute inset-0 flex justify-center items-center z-50">
+        <span className="loader loading"></span>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="absolute inset-0 flex flex-col justify-center items-center z-50">
+        <span className="loader error"></span>
+        <p className="text-lg md:text-xl font-semibold text-slate-700">
+          Error Loading Weather Data
+        </p>
+      </div>
+    );
 
   const onSelectDay = (dayData) => {
     const d = dayData.day;
