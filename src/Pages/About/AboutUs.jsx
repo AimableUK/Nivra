@@ -77,6 +77,28 @@ const AboutUs = () => {
               aimableukobizaba@gmail.com
             </a>
           </p>
+
+          <div className="border-t border-white/30 my-6"></div>
+
+          <div className="border-l-4 border-l-yellow-900 p-4 rounded-md mt-4 text-sm">
+            <h4 className="font-bold mb-1">Disclaimer:</h4>
+            <p>
+              While we strive to provide accurate and timely weather data, there
+              may occasionally be discrepancies in location detection or weather
+              forecasts due to technical limitations or third-party data
+              inaccuracies.
+            </p>
+            <p className="mt-1">
+              If your current location is misidentified or the weather
+              information appears incorrect, please try searching manually for
+              your location or enabling GPS access if disabled.
+            </p>
+            <p className="mt-1 italic text-gray-600">
+              We appreciate your understanding and are continuously working to
+              improve accuracy and reliability.
+            </p>
+          </div>
+
           <div className="border-t border-white/30 my-6"></div>
           <p className="text-base mb-4">
             Made With
