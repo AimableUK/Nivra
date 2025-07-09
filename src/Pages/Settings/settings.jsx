@@ -7,13 +7,16 @@ const SiteSettings = () => {
   const [deleteDetails, setDeleteDetails] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState("");
 
+  const [dataUpdateDisplay, setDataUpdateDisplay] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState("");
+
   const settings = useSettingsStore((s) => s.settings);
   const updateSettings = useSettingsStore((s) => s.updateSettings);
   const resetSiteData = useSettingsStore((s) => s.resetSiteData);
 
   const [formData, setFormData] = useState(settings);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => setFormData(settings), [settings]);
 
@@ -27,6 +30,15 @@ const SiteSettings = () => {
       updateSettings(updated);
       return updated;
     });
+    setTimeout(() => {
+      setDataUpdateDisplay(true);
+      setUpdateMessage("Data Updated Successfully");
+    }, 500);
+
+    setTimeout(() => {
+      setDataUpdateDisplay(false);
+      setUpdateMessage("");
+    }, 3000);
   };
 
   //   delete dialog
@@ -44,7 +56,7 @@ const SiteSettings = () => {
 
     setTimeout(() => {
       setDeleteMessage("");
-      navigate("/")
+      navigate("/");
       onCancel();
     }, 100);
   };
@@ -55,7 +67,21 @@ const SiteSettings = () => {
   };
 
   return (
-    <div className="min-h-screen pb-2">
+    <div className="relative min-h-screen pb-2">
+      {/* Setting Update  */}
+      <section
+        className={`z-50 fixed bg-[#33a7ce] p-2 px-3 rounded-md right-4 top-4 text-white font-semibold shadow-lg
+          transition-all duration-300 ease-in-out
+          ${
+            dataUpdateDisplay
+              ? "translate-x-0 opacity-100"
+              : "translate-x-full opacity-0"
+          }
+        `}
+      >
+        <p className="text-sm md:text-xl">{updateMessage}</p>
+      </section>
+
       <div className="m-2 md:m-4 md:mx-10">
         {/* Top One */}
         <div className="settingsmain flex flex-row justify-between items-center pr-4 pl-2 py-1">
@@ -82,7 +108,7 @@ const SiteSettings = () => {
 
         {/* About Main */}
         <section className="settingsmain p-3 px-4">
-          <div className="max-w-4xl mx-auto px-4 py-8 space-y-5">
+          <div className="max-w-4xl mx-auto px-4 py-8 space-y-3">
             <h1 className="text-xl md:text-3xl font-bold text-gray-800 flex flex-row flex-nowrap items-center">
               <span>
                 <svg
@@ -103,9 +129,9 @@ const SiteSettings = () => {
               &nbsp;Site Settings
             </h1>
 
-            <form>
+            <form autoComplete="off">
               {/* Location Preferences */}
-              <section>
+              <section className="mb-3">
                 <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
                   <span>
                     <svg
@@ -155,7 +181,7 @@ const SiteSettings = () => {
               </section>
 
               {/* Units */}
-              <section>
+              <section className="mb-3">
                 <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
                   <span>
                     <svg
@@ -228,7 +254,7 @@ const SiteSettings = () => {
               </section>
 
               {/* Notifications */}
-              <section>
+              <section className="mb-3">
                 <h2 className="text-sm md:text-xl font-semibold mb-2 flex flex-row flex-nowrap items-center">
                   <span>
                     <svg
