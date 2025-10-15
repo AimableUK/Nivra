@@ -1,12 +1,74 @@
-# React + Vite
+# Weather Forecast App 🌦️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This is a **Weather Forecast Web Application** built with **React**.  
+The main inspiration came from a common daily problem — not knowing what clothes to wear based on the weather.  
+So I decided to create an app that not only shows weather updates but also gives clothing suggestions according to the current conditions. 👕🧥🌞🌧️
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🌍 Real-time weather updates using a weather API
+- 👕 Smart clothing suggestions based on temperature and weather type
+- 📍 Location-based forecast (using your current location)
+- 🌤️ Displays temperature, humidity, wind speed, and weather icons
+- 📱 Fully responsive design (works on mobile and desktop)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Preview
+
+<p>
+    <img src="./public/dash1.png" width="600" height="350" />
+</p>
+<p>
+    <img src="./public/dash2.png" width="600" height="350" />
+</p>
+
+## 🧠 Inspiration
+
+There were many times I stood in front of my wardrobe unsure what to wear - raincoat or T-shirt? sweater or shorts?  
+That small frustration inspired me to build a **weather + clothing recommendation** app that helps anyone plan their outfit smartly every day.
+
+## ⚙️ Tech Stack
+
+- **Frontend:** React.js (Vite or Create React App)
+- **Styling:** Tailwind CSS | CSS Modules
+- **API:** Weather API
+
+## 🚀 Getting Started
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/yourusername/weather-forecast-app.git
+   ```
+2. Navigate into the folder
+   ```bash
+   cd weather-forecast-app
+   ```
+3. Install dependencies
+   ```bash
+   npm install
+   ```
+4. Add your weather API key in `.env` file
+   ```env
+   VITE_WEATHER_API_KEY=your_api_key_here
+   ```
+5. Start the development server
+   ```bash
+   npm run dev
+   ```
+
+## 💡 Future Improvements
+
+- Add weekly forecasts
+- Improve clothing recommendation logic (consider wind chill, UV index, etc.)
+- Add seasonal theme and background change
+- Enable saving favorite locations
+
+## 🧑‍💻 Author
+
+**[Ukobizaba Aimable](https://ukobizaba-aimable.vercel.app/)**  
+Inspired by the need for smarter daily weather insights and dressing comfort.
+
+---
+
+Made with ❤️ using React.
