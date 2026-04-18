@@ -15,7 +15,7 @@ export default defineConfig({
         "apple-touch-icon.png",
       ],
       manifest: {
-        name: "Nivra - Weather Forecast",
+        name: "Nivra",
         short_name: "Nivra",
         description: "Weather forecast app with real-time updates",
         theme_color: "#086aae",
