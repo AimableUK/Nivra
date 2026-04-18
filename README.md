@@ -3,7 +3,7 @@
 ## Overview
 
 This is a **Weather Forecast Web Application** built with **React**.  
-The main inspiration came from a common daily problem — not knowing what clothes to wear based on the weather.  
+The main inspiration came from a common daily problem - not knowing what clothes to wear based on the weather.  
 So I decided to create an app that not only shows weather updates but also gives clothing suggestions according to the current conditions. 👕🧥🌞🌧️
 
 ## ✨ Features

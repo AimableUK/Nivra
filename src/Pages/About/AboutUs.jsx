@@ -36,7 +36,7 @@ const AboutUs = () => {
           <p className="text-base md:text-lg mb-4 leading-relaxed text-center">
             <strong>Nivra</strong> is your smart weather companion. Whether
             you're dressing for a cold morning or planning an outdoor walk,
-            Nivra gives you accurate forecasts and smart suggestions — like when
+            Nivra gives you accurate forecasts and smart suggestions - like when
             to carry an umbrella or wear a jacket.
           </p>
 

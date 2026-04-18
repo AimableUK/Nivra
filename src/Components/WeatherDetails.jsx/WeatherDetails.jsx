@@ -114,18 +114,18 @@ const WeatherDetails = ({
               </p>
             )}
             <p className="text-[13px] md:font-semibold text-[#2d2d2d]">
-              Humidity: <strong>{dailyData?.humidity ?? "—"}%</strong>
+              Humidity: <strong>{dailyData?.humidity ?? "-"}%</strong>
             </p>
             <p className="text-[13px] md:font-semibold text-[#2d2d2d]">
               Precipitation:&nbsp;
               <strong>
-                {precipValue ?? "—"} {precipSymbol}
+                {precipValue ?? "-"} {precipSymbol}
               </strong>
             </p>
             <p className="text-[13px] md:font-semibold text-[#2d2d2d]">
               Wind:&nbsp;
               <strong>
-                {windValue ?? "—"} {windSymbol}
+                {windValue ?? "-"} {windSymbol}
               </strong>
             </p>
             <p className="text-[11px] md:text-sm lg:text-xl font-semibold items-end text-end text-[#2d2d2d] mt-1 md:mt-0">

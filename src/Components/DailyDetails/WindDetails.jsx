@@ -35,7 +35,7 @@ const WindDetails = ({ hourly = [] }) => {
             <div className="text-sm text-[#444] font-bold">
               {windSpeed !== "-"
                 ? `${windSpeed} ${windUnit === "mph" ? "mph" : "km/h"}`
-                : "—"}
+                : "-"}
             </div>
 
             <img
